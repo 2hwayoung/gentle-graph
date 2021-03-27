@@ -111,11 +111,9 @@ def crawl_detail_content(driver, data: dict) -> dict:
     return data
 
 
-def crawling():
+def crawling(chrome_driver_path: str):
     # init chrome driver
-    chrome_driver = (
-        "C:/Users/seungsu/Desktop/gentlegraph/chromedriver_win32/chromedriver.exe"
-    )
+    chrome_driver = chrome_driver_path
 
     chrome_options = webdriver.ChromeOptions()
 
@@ -195,3 +193,9 @@ def crawling():
 
     return total_contents
 
+
+if __name__ == "__main__":
+    chrome_driver_path = (
+        "C:/Users/seungsu/Desktop/gentlegraph/chromedriver_win32/chromedriver.exe"
+    )
+    crawling(chrome_driver_path)

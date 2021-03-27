@@ -4,11 +4,9 @@ from selenium import webdriver
 from fake_useragent import UserAgent
 
 
-def crawling():
+def crawling(chrome_driver_path: str):
     # init chrome driver
-    chrome_driver = (
-        "C:/Users/seungsu/Desktop/gentlegraph/chromedriver_win32/chromedriver.exe"
-    )
+    chrome_driver = chrome_driver_path
 
     chrome_options = webdriver.ChromeOptions()
 
@@ -99,3 +97,10 @@ def crawling():
         trends_list.append(data)
 
     return trends_list
+
+
+if __name__ == "__main__":
+    chrome_driver_path = (
+        "C:/Users/seungsu/Desktop/gentlegraph/chromedriver_win32/chromedriver.exe"
+    )
+    crawling(chrome_driver_path)

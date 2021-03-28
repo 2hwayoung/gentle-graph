@@ -21,7 +21,7 @@ def crawl_content(soup, driver, category, ranking_box_class, num):
     for num in range(num):
         d = dict()
         d['datetime'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))  # 크롤링한 날짜
-        d['rank'] = ranking_box[num].find(class_="screen_out").get_text()  # 순위
+        d['rank'] = int(ranking_box[num].find(class_="screen_out").get_text())  # 순위
         d['category'] = category
 
         news_info = contents_box[num].find(class_="tit_thumb")
@@ -42,26 +42,26 @@ def crawl_content(soup, driver, category, ranking_box_class, num):
         driver.implicitly_wait(3)
 
         try:
-            link['n_comment'] = driver.find_element_by_css_selector('#alex-header > em').text  # 댓글수
+            link['n_comment'] = int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
         except:
             link['n_comment'] = -1
 
         foot = driver.find_element_by_css_selector(
             '#mArticle > div.foot_view > div.emotion_wrap > div.emotion_list > div > div > div')
-        link['n_reaction_recommend'] = foot.find_element_by_css_selector(
-            'div.selectionbox.type-RECOMMEND.unselected > span.count').text  # 추천해요 수
-        link['n_reaction_like'] = foot.find_element_by_css_selector(
-            'div.selectionbox.type-LIKE.unselected > span.count').text  # 좋아요 수
-        link['n_reaction_impress'] = foot.find_element_by_css_selector(
-            'div.selectionbox.type-IMPRESS.unselected > span.count').text  # 감동이에요 수
-        link['n_reaction_angry'] = foot.find_element_by_css_selector(
-            'div.selectionbox.type-ANGRY.unselected > span.count').text  # 화나요 수
-        link['n_reaction_sad'] = foot.find_element_by_css_selector(
-            'div.selectionbox.type-SAD.unselected > span.count').text  # 슬퍼요 수
+        link['n_reaction_recommend'] = int(foot.find_element_by_css_selector(
+            'div.selectionbox.type-RECOMMEND.unselected > span.count').text)  # 추천해요 수
+        link['n_reaction_like'] = int(foot.find_element_by_css_selector(
+            'div.selectionbox.type-LIKE.unselected > span.count').text)  # 좋아요 수
+        link['n_reaction_impress'] = int(foot.find_element_by_css_selector(
+            'div.selectionbox.type-IMPRESS.unselected > span.count').text)  # 감동이에요 수
+        link['n_reaction_angry'] = int(foot.find_element_by_css_selector(
+            'div.selectionbox.type-ANGRY.unselected > span.count').text)  # 화나요 수
+        link['n_reaction_sad'] = int(foot.find_element_by_css_selector(
+            'div.selectionbox.type-SAD.unselected > span.count').text)  # 슬퍼요 수
         # 전체 반응 수
-        link['n_reactions'] = str(int(link['n_reaction_recommend']) + int(link['n_reaction_like']) \
-                              + int(link['n_reaction_impress']) + int(link['n_reaction_angry']) \
-                              + int(link['n_reaction_sad']))
+        link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
+                              + link['n_reaction_impress'] + link['n_reaction_angry'] \
+                              + link['n_reaction_sad'])
 
     return lst
 
@@ -105,26 +105,26 @@ def crawl_content_by_age(soup, driver, category):
                 driver.implicitly_wait(3)
 
                 try:
-                    link['n_comment'] = driver.find_element_by_css_selector('#alex-header > em').text  # 댓글수
+                    link['n_comment'] = int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
                 except:
                     link['n_comment'] = -1
 
                 foot = driver.find_element_by_css_selector(
                     '#mArticle > div.foot_view > div.emotion_wrap > div.emotion_list > div > div > div')
-                link['n_reaction_recommend'] = foot.find_element_by_css_selector(
-                    'div.selectionbox.type-RECOMMEND.unselected > span.count').text  # 추천해요 수
-                link['n_reaction_like'] = foot.find_element_by_css_selector(
-                    'div.selectionbox.type-LIKE.unselected > span.count').text  # 좋아요 수
-                link['n_reaction_impress'] = foot.find_element_by_css_selector(
-                    'div.selectionbox.type-IMPRESS.unselected > span.count').text  # 감동이에요 수
-                link['n_reaction_angry'] = foot.find_element_by_css_selector(
-                    'div.selectionbox.type-ANGRY.unselected > span.count').text  # 화나요 수
-                link['n_reaction_sad'] = foot.find_element_by_css_selector(
-                    'div.selectionbox.type-SAD.unselected > span.count').text  # 슬퍼요 수
+                link['n_reaction_recommend'] = int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-RECOMMEND.unselected > span.count').text)  # 추천해요 수
+                link['n_reaction_like'] = int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-LIKE.unselected > span.count').text)  # 좋아요 수
+                link['n_reaction_impress'] = int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-IMPRESS.unselected > span.count').text)  # 감동이에요 수
+                link['n_reaction_angry'] = int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-ANGRY.unselected > span.count').text)  # 화나요 수
+                link['n_reaction_sad'] = int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-SAD.unselected > span.count').text)  # 슬퍼요 수
                 # 전체 반응 수
-                link['n_reactions'] = str(int(link['n_reaction_recommend']) + int(link['n_reaction_like']) \
-                                      + int(link['n_reaction_impress']) + int(link['n_reaction_angry']) \
-                                      + int(link['n_reaction_sad']))
+                link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
+                                      + link['n_reaction_impress'] + link['n_reaction_angry'] \
+                                      + link['n_reaction_sad'])
         lst.append(l)
 
     return lst

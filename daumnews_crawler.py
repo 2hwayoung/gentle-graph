@@ -1,6 +1,10 @@
 # 다음 랭킹 뉴스 크롤러
 # 많이 본 / 열독률 높은 / 댓글 많은 / 연령별 랭킹 뉴스
 
+import sys
+sys.path.append("/home/capje/kafka_tool/")
+
+from kafka_module import *
 import re
 import time
 
@@ -14,7 +18,7 @@ import os
 import tqdm
 
 # 많이 본 / 열독률 높은 / 댓글 많은 뉴스 순서
-def crawl_content(soup, driver, category, ranking_box_class, num):
+def crawl_content(soup, driver, producer, category, ranking_box_class, num):
     ranking_box = soup.find_all(class_=ranking_box_class)
     contents_box = soup.find_all(class_="cont_thumb")
     lst = []
@@ -42,7 +46,7 @@ def crawl_content(soup, driver, category, ranking_box_class, num):
 
         driver.get(link['url'])
         driver.implicitly_wait(3)
-        print("내부")
+        # print("내부")
         try:
             link['n_comment'] = int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
         except:
@@ -64,11 +68,13 @@ def crawl_content(soup, driver, category, ranking_box_class, num):
         link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
                               + link['n_reaction_impress'] + link['n_reaction_angry'] \
                               + link['n_reaction_sad'])
-        print(link)
+        
+        producer.send_to_topic(topic="daum_news", value=link)
+
     return lst
 
 # 연령별 뉴스
-def crawl_content_by_age(soup, driver, category):
+def crawl_content_by_age(soup, driver, producer, category):
     female = soup.find_all(class_='rank_female')
     male = soup.find_all(class_='rank_male')
     ranking_news = [female, male]
@@ -106,7 +112,7 @@ def crawl_content_by_age(soup, driver, category):
 
                 driver.get(link['url'])
                 driver.implicitly_wait(3)
-                print("내부")
+                # print("내부")
                 try:
                     link['n_comment'] = int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
                 except:
@@ -128,8 +134,11 @@ def crawl_content_by_age(soup, driver, category):
                 link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
                                       + link['n_reaction_impress'] + link['n_reaction_angry'] \
                                       + link['n_reaction_sad'])
+                
+                producer.send_to_topic(topic="daum_news", value=link)
+
         lst.append(l)
-        print(l)
+        # print(l)
     return lst
 
 
@@ -175,14 +184,16 @@ def crawling(chrome_driver_path: str):
     chrome_options.add_experimental_option("prefs", prefs)
     driver = webdriver.Chrome(chrome_driver, options=chrome_options)
 
+    p = Producer("/home/capje/kafka_tool/config.yaml", value_type="json")
+    
     date = time.strftime('%Y%m%d', time.localtime(time.time()))
     tags = ["popular/news", "popular/entertain", "popular/sports", "kkomkkom/news",
             "kkomkkom/entertain", "kkomkkom/sports", "bestreply/", "age/"]
     news_list = []
-    print(date)
+    # print(date)
     # for each catogory
     for tag in tags:
-        print(tag)
+        # print(tag)
     # for i in tqdm(range(len(tags))):
        # tag = tags[i]
         url = "https://news.daum.net/ranking/" + tag + "?regDate=" + str(date)
@@ -191,13 +202,13 @@ def crawling(chrome_driver_path: str):
 
         main_tag, category_tag = tag.split('/')
         if main_tag == "popular":
-            news_list.extend(crawl_content(soup, driver, tag, 'rank_num rank_popular', 50))
+            news_list.extend(crawl_content(soup, driver, p, tag, 'rank_num rank_popular', 50))
         elif main_tag == "kkomkkom":
-            news_list.extend(crawl_content(soup, driver, tag, 'rank_num rank_popular', 30))
+            news_list.extend(crawl_content(soup, driver, p, tag, 'rank_num rank_popular', 30))
         elif main_tag == "bestreply":
-            news_list.extend(crawl_content(soup, driver, main_tag, 'rank_num', 50))
+            news_list.extend(crawl_content(soup, driver, p, main_tag, 'rank_num', 50))
         elif main_tag == "age":
-            news_list.extend(crawl_content_by_age(soup, driver, main_tag))
+            news_list.extend(crawl_content_by_age(soup, driver, p, main_tag))
     return news_list
 
 
@@ -208,7 +219,7 @@ if __name__ == "__main__":
     end = time.perf_counter()
     print('time elapsed: ', end-start)
     print('data size: ', len(data))
-    title = "Daum_ranking_news_" + str(time.strftime('%Y%m%d_%H%M%S', time.localtime(time.time()))) + ".json"
-    with open(title, 'w', encoding='utf-8') as make_file:
-        json.dump(data, make_file, indent="\t", ensure_ascii=False)
+    # title = "Daum_ranking_news_" + str(time.strftime('%Y%m%d_%H%M%S', time.localtime(time.time()))) + ".json"
+    # with open(title, 'w', encoding='utf-8') as make_file:
+    #     json.dump(data, make_file, indent="\t", ensure_ascii=False)
 

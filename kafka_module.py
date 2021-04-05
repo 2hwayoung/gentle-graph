@@ -10,31 +10,23 @@ class Producer:
             conf = yaml.load(f, Loader=yaml.FullLoader)
 
         if value_type == "json":
-            # self.producer = KafkaProducer(
-            #     bootstrap_servers=f"{conf['kafka']['hosts'][0]}:{conf['kafka']['port']},{conf['kafka']['hosts'][1]}:{conf['kafka']['port']},{conf['kafka']['hosts'][2]}:{conf['kafka']['port']}",
-            #     acks=1,
-            #     api_version=(0, 11, 5),
-            #     compression_type="gzip",
-            #     value_serializer=lambda x: dumps(x).encode("utf-8"),
-            # )
-
             self.producer = KafkaProducer(
                 bootstrap_servers=['kafka1:9092','kafka2:9092','kafka3:9092'],
                 acks=1,
+                compression_type="gzip",
                 api_version=(0, 11, 5),
                 value_serializer=lambda x: dumps(x).encode("utf-8"),
             )
-                # compression_type="gzip",
 
         elif value_type == "string":
             self.producer = KafkaProducer(
                 bootstrap_servers=f"{conf['kafka']['hosts'][0]}:{conf['kafka']['port']},{conf['kafka']['hosts'][1]}:{conf['kafka']['port']},{conf['kafka']['hosts'][2]}:{conf['kafka']['port']}",
                 acks=1,
+                compression_type="gzip",
                 api_version=(0, 11, 5),
                 value_serializer=lambda x: x.encode("utf-8"),
             )
             # key_serializer=lambda x: x.encode("utf-8"),
-                # compression_type="gzip",
 
     def __del__(self):
         self.producer.close()

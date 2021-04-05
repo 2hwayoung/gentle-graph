@@ -48,3 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+airflow-scheduler.err
+airflow-scheduler.out
+airflow-webserver.err
+airflow-webserver.out
+
+logs/

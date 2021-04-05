@@ -1,3 +1,4 @@
+import os
 import re
 import time
 
@@ -108,6 +109,8 @@ def crawl_detail_content(driver, data: dict) -> dict:
         }
     )
 
+    print(data)
+
     return data
 
 
@@ -117,10 +120,12 @@ def crawling(chrome_driver_path: str):
 
     chrome_options = webdriver.ChromeOptions()
 
-    # chrome_options.add_argument("headless")
+    chrome_options.add_argument("headless")
     chrome_options.add_argument("--window-size=1100,2000")
     userAgent = UserAgent().random
     chrome_options.add_argument(f"user-agent={userAgent}")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
 
     prefs = {
         "profile.default_content_setting_values": {
@@ -184,8 +189,9 @@ def crawling(chrome_driver_path: str):
             "creator": creator,
             "creator_url": creator_channel,
         }
-
         total_contents.append(data)
+
+        print(data)
 
     # get detail info
     for content in tqdm(total_contents):
@@ -195,7 +201,5 @@ def crawling(chrome_driver_path: str):
 
 
 if __name__ == "__main__":
-    chrome_driver_path = (
-        "C:/Users/seungsu/Desktop/gentlegraph/chromedriver_win32/chromedriver.exe"
-    )
+    chrome_driver_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chromedriver")
     crawling(chrome_driver_path)

@@ -9,15 +9,16 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
-path = os.path.join(os.getcwd(), "chromedriver")
+#headers = {
+#    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
+#path = os.path.join(os.getcwd(), "chromedriver")
 
 
-def crawling(chrome_driver_path: str, headers):
+def crawling(chrome_driver_path: str):
     url = 'https://news.naver.com'
     url_add = url + '/main/ranking/offices.nhn'
-    res = requests.post(url_add, headers=headers)
+    # res = requests.post(url_add, headers=headers)
+    res = requests.post(url_add)
     press_link = []
     news_info = []
     soup = bs(res.text, 'html.parser')
@@ -30,7 +31,10 @@ def crawling(chrome_driver_path: str, headers):
     path = os.path.join(os.getcwd(), "chromedriver")
     options = webdriver.ChromeOptions()
     # options.add_argument('headless')
-    options.add_argument('user-agent=' + headers['User-Agent'])
+    # options.add_argument('user-agent=' + headers['User-Agent'])
+    options.add_argument('headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     options.add_argument('disable-gpu')
     options.add_argument('lang=ko_KR')
     driver = webdriver.Chrome(path, options=options)
@@ -119,5 +123,7 @@ if __name__ == "__main__":
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'
     }
-    chrome_driver_path = os.path.join(os.getcwd(), "chromedriver")
-    crawling(chrome_driver_path, headers)
+    #chrome_driver_path = os.path.join(os.getcwd(), "chromedriver")
+    chrome_driver_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chromedriver")
+    crawling(chrome_driver_path)
+    # crawling(chrome_driver_path)

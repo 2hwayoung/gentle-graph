@@ -2,7 +2,7 @@ import re
 import datetime
 from selenium import webdriver
 from fake_useragent import UserAgent
-
+import os
 
 def crawling(chrome_driver_path: str):
     # init chrome driver
@@ -10,10 +10,12 @@ def crawling(chrome_driver_path: str):
 
     chrome_options = webdriver.ChromeOptions()
 
-    # chrome_options.add_argument("headless")
+    chrome_options.add_argument("headless")
     chrome_options.add_argument("--window-size=1100,2000")
     userAgent = UserAgent().random
     chrome_options.add_argument(f"user-agent={userAgent}")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
 
     prefs = {
         "profile.default_content_setting_values": {
@@ -94,13 +96,13 @@ def crawling(chrome_driver_path: str):
             "search_count": search_count,
         }
 
+        print(data)
         trends_list.append(data)
 
     return trends_list
 
 
 if __name__ == "__main__":
-    chrome_driver_path = (
-        "C:/Users/seungsu/Desktop/gentlegraph/chromedriver_win32/chromedriver.exe"
-    )
-    crawling(chrome_driver_path)
+    chrome_driver_path = os.path.join(os.getcwd(), "chromedriver")
+    result = crawling(chrome_driver_path)
+    # print(trends_list)

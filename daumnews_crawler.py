@@ -8,8 +8,10 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-# from fake_useragent import UserAgent
+from fake_useragent import UserAgent
 import json
+import os
+import tqdm
 
 # 많이 본 / 열독률 높은 / 댓글 많은 뉴스 순서
 def crawl_content(soup, driver, category, ranking_box_class, num):
@@ -40,7 +42,7 @@ def crawl_content(soup, driver, category, ranking_box_class, num):
 
         driver.get(link['url'])
         driver.implicitly_wait(3)
-
+        print("내부")
         try:
             link['n_comment'] = int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
         except:
@@ -62,7 +64,7 @@ def crawl_content(soup, driver, category, ranking_box_class, num):
         link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
                               + link['n_reaction_impress'] + link['n_reaction_angry'] \
                               + link['n_reaction_sad'])
-
+        print(link)
     return lst
 
 # 연령별 뉴스
@@ -97,13 +99,14 @@ def crawl_content_by_age(soup, driver, category):
             # 기사 내부 정보 가져오기
             for link in l:
                 resp = requests.get(link['url'])
+                time.sleep(1)
                 soup = BeautifulSoup(resp.text, "lxml")
                 info = soup.find(class_='info_view')
                 link['date'] = info.find(class_='num_date').get_text()  # 입력날짜
 
                 driver.get(link['url'])
                 driver.implicitly_wait(3)
-
+                print("내부")
                 try:
                     link['n_comment'] = int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
                 except:
@@ -126,7 +129,7 @@ def crawl_content_by_age(soup, driver, category):
                                       + link['n_reaction_impress'] + link['n_reaction_angry'] \
                                       + link['n_reaction_sad'])
         lst.append(l)
-
+        print(l)
     return lst
 
 
@@ -136,9 +139,11 @@ def crawling(chrome_driver_path: str):
     chrome_options = webdriver.ChromeOptions()
 
     chrome_options.add_argument('headless')
-    # userAgent = UserAgent().random
-    # chrome_options.add_argument(f"user-agent={userAgent}")
-
+    userAgent = UserAgent().random
+    chrome_options.add_argument(f"user-agent={userAgent}")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    
     prefs = {
         "profile.default_content_setting_values": {
             "cookies": 2,
@@ -174,9 +179,12 @@ def crawling(chrome_driver_path: str):
     tags = ["popular/news", "popular/entertain", "popular/sports", "kkomkkom/news",
             "kkomkkom/entertain", "kkomkkom/sports", "bestreply/", "age/"]
     news_list = []
-
+    print(date)
     # for each catogory
     for tag in tags:
+        print(tag)
+    # for i in tqdm(range(len(tags))):
+       # tag = tags[i]
         url = "https://news.daum.net/ranking/" + tag + "?regDate=" + str(date)
         resp = requests.get(url)
         soup = BeautifulSoup(resp.text, "lxml")
@@ -190,20 +198,17 @@ def crawling(chrome_driver_path: str):
             news_list.extend(crawl_content(soup, driver, main_tag, 'rank_num', 50))
         elif main_tag == "age":
             news_list.extend(crawl_content_by_age(soup, driver, main_tag))
-
     return news_list
 
 
 if __name__ == "__main__":
-    chrome_driver_path = (
-        "C:/Users/USER/git/GentleGraph/crawling/chromedriver.exe"
-    )
+    chrome_driver_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chromedriver")
     start = time.perf_counter()
     data = crawling(chrome_driver_path)
     end = time.perf_counter()
     print('time elapsed: ', end-start)
-    print('data 개수: ', len(data))
-    # title = "Daum_ranking_news_" + str(time.strftime('%Y%m%d_%H%M%S', time.localtime(time.time()))) + ".json"
-    # with open(title, 'w', encoding='utf-8') as make_file:
-    #     json.dump(data, make_file, indent="\t", ensure_ascii=False)
+    print('data size: ', len(data))
+    title = "Daum_ranking_news_" + str(time.strftime('%Y%m%d_%H%M%S', time.localtime(time.time()))) + ".json"
+    with open(title, 'w', encoding='utf-8') as make_file:
+        json.dump(data, make_file, indent="\t", ensure_ascii=False)
 

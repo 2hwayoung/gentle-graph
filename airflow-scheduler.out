@@ -1,0 +1,56 @@
+[[34m2021-04-03 15:05:03,987[0m] {[34mscheduler_job.py:[0m1247} INFO[0m - Starting the scheduler[0m
+[[34m2021-04-03 15:05:03,987[0m] {[34mscheduler_job.py:[0m1252} INFO[0m - Processing each file at most -1 times[0m
+[[34m2021-04-03 15:05:04,089[0m] {[34mdag_processing.py:[0m250} INFO[0m - Launched DagFileProcessorManager with pid: 15952[0m
+[[34m2021-04-03 15:05:04,090[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:05:04,093[0m] {[34msettings.py:[0m54} INFO[0m - Configured default timezone Timezone('UTC')[0m
+[[34m2021-04-03 15:05:04,138[0m] {[34mscheduler_job.py:[0m1856} INFO[0m - Marked 2 SchedulerJob instances as failed[0m
+[[34m2021-04-03 15:10:04,259[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:15:04,298[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:20:04,422[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:25:04,577[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:30:04,727[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:35:04,929[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:40:05,118[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:45:05,284[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:50:05,420[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 15:55:05,556[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:00:05,719[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:05:05,872[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:10:06,026[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:15:06,211[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:15:26,340[0m] {[34mscheduler_job.py:[0m941} INFO[0m - 1 tasks up for execution:
+	<TaskInstance: tutorial.print_date 2021-04-01 00:00:00+00:00 [scheduled]>[0m
+[[34m2021-04-03 16:15:26,348[0m] {[34mscheduler_job.py:[0m975} INFO[0m - Figuring out tasks to run in Pool(name=default_pool) with 128 open slots and 1 task instances ready to be queued[0m
+[[34m2021-04-03 16:15:26,348[0m] {[34mscheduler_job.py:[0m1002} INFO[0m - DAG tutorial has 0/16 running and queued tasks[0m
+[[34m2021-04-03 16:15:26,349[0m] {[34mscheduler_job.py:[0m1063} INFO[0m - Setting the following tasks to queued state:
+	<TaskInstance: tutorial.print_date 2021-04-01 00:00:00+00:00 [scheduled]>[0m
+[[34m2021-04-03 16:15:26,358[0m] {[34mscheduler_job.py:[0m1105} INFO[0m - Sending TaskInstanceKey(dag_id='tutorial', task_id='print_date', execution_date=datetime.datetime(2021, 4, 1, 0, 0, tzinfo=Timezone('UTC')), try_number=1) to executor with priority 3 and queue default[0m
+[[34m2021-04-03 16:15:26,358[0m] {[34mbase_executor.py:[0m82} INFO[0m - Adding to queue: ['airflow', 'tasks', 'run', 'tutorial', 'print_date', '2021-04-01T00:00:00+00:00', '--local', '--pool', 'default_pool', '--subdir', '/home/capje/gentleg/airflow/lib64/python3.6/site-packages/airflow/example_dags/tutorial.py'][0m
+[[34m2021-04-03 16:15:26,368[0m] {[34mlocal_executor.py:[0m81} INFO[0m - QueuedLocalWorker running ['airflow', 'tasks', 'run', 'tutorial', 'print_date', '2021-04-01T00:00:00+00:00', '--local', '--pool', 'default_pool', '--subdir', '/home/capje/gentleg/airflow/lib64/python3.6/site-packages/airflow/example_dags/tutorial.py'][0m
+[[34m2021-04-03 16:15:26,499[0m] {[34mdagbag.py:[0m448} INFO[0m - Filling up the DagBag from /home/capje/gentleg/airflow/lib64/python3.6/site-packages/airflow/example_dags/tutorial.py[0m
+[[34m2021-04-03 16:15:26,544[0m] {[34mscheduler_job.py:[0m941} INFO[0m - 1 tasks up for execution:
+	<TaskInstance: tutorial.print_date 2021-04-02 00:00:00+00:00 [scheduled]>[0m
+[[34m2021-04-03 16:15:26,549[0m] {[34mscheduler_job.py:[0m975} INFO[0m - Figuring out tasks to run in Pool(name=default_pool) with 127 open slots and 1 task instances ready to be queued[0m
+[[34m2021-04-03 16:15:26,549[0m] {[34mscheduler_job.py:[0m1002} INFO[0m - DAG tutorial has 1/16 running and queued tasks[0m
+[[34m2021-04-03 16:15:26,549[0m] {[34mscheduler_job.py:[0m1063} INFO[0m - Setting the following tasks to queued state:
+	<TaskInstance: tutorial.print_date 2021-04-02 00:00:00+00:00 [scheduled]>[0m
+[[34m2021-04-03 16:15:26,557[0m] {[34mscheduler_job.py:[0m1105} INFO[0m - Sending TaskInstanceKey(dag_id='tutorial', task_id='print_date', execution_date=datetime.datetime(2021, 4, 2, 0, 0, tzinfo=Timezone('UTC')), try_number=1) to executor with priority 3 and queue default[0m
+[[34m2021-04-03 16:15:26,557[0m] {[34mbase_executor.py:[0m82} INFO[0m - Adding to queue: ['airflow', 'tasks', 'run', 'tutorial', 'print_date', '2021-04-02T00:00:00+00:00', '--local', '--pool', 'default_pool', '--subdir', '/home/capje/gentleg/airflow/lib64/python3.6/site-packages/airflow/example_dags/tutorial.py'][0m
+[[34m2021-04-03 16:15:26,562[0m] {[34mlocal_executor.py:[0m81} INFO[0m - QueuedLocalWorker running ['airflow', 'tasks', 'run', 'tutorial', 'print_date', '2021-04-02T00:00:00+00:00', '--local', '--pool', 'default_pool', '--subdir', '/home/capje/gentleg/airflow/lib64/python3.6/site-packages/airflow/example_dags/tutorial.py'][0m
+[[34m2021-04-03 16:15:26,662[0m] {[34mdagbag.py:[0m448} INFO[0m - Filling up the DagBag from /home/capje/gentleg/airflow/lib64/python3.6/site-packages/airflow/example_dags/tutorial.py[0m
+Running <TaskInstance: tutorial.print_date 2021-04-01T00:00:00+00:00 [queued]> on host cluster8
+Running <TaskInstance: tutorial.print_date 2021-04-02T00:00:00+00:00 [queued]> on host cluster8
+[[34m2021-04-03 16:15:28,190[0m] {[34mscheduler_job.py:[0m1206} INFO[0m - Executor reports execution of tutorial.print_date execution_date=2021-04-01 00:00:00+00:00 exited with status success for try_number 1[0m
+[[34m2021-04-03 16:15:29,327[0m] {[34mscheduler_job.py:[0m1206} INFO[0m - Executor reports execution of tutorial.print_date execution_date=2021-04-02 00:00:00+00:00 exited with status success for try_number 1[0m
+[[34m2021-04-03 16:20:06,343[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:25:06,496[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:30:06,653[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:35:06,796[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:40:06,906[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:41:16,879[0m] {[34mdagrun.py:[0m445} INFO[0m - Marking run <DagRun tutorial @ 2021-04-01 00:00:00+00:00: scheduled__2021-04-01T00:00:00+00:00, externally triggered: False> successful[0m
+[[34m2021-04-03 16:45:07,027[0m] {[34mscheduler_job.py:[0m1834} INFO[0m - Resetting orphaned tasks for active dag runs[0m
+[[34m2021-04-03 16:48:22,252[0m] {[34mscheduler_job.py:[0m746} INFO[0m - Exiting gracefully upon receiving signal 15[0m
+[[34m2021-04-03 16:48:23,261[0m] {[34mprocess_utils.py:[0m100} INFO[0m - Sending Signals.SIGTERM to GPID 15952[0m
+[[34m2021-04-03 16:48:23,394[0m] {[34mprocess_utils.py:[0m66} INFO[0m - Process psutil.Process(pid=15952, status='terminated', exitcode=0, started='15:05:04') (15952) terminated with exit code 0[0m
+[[34m2021-04-03 16:48:23,401[0m] {[34mprocess_utils.py:[0m100} INFO[0m - Sending Signals.SIGTERM to GPID 15952[0m
+[[34m2021-04-03 16:48:23,401[0m] {[34mscheduler_job.py:[0m1301} INFO[0m - Exited execute loop[0m

@@ -4,15 +4,18 @@ from kafka import KafkaProducer
 from kafka import KafkaConsumer
 
 class Producer:
-    def __init__(self, config_file: str, value_type: str = "json"):
+    def __init__(self, config_file: str, value_type: str = "json", acks: int = 1):
 
         with open(config_file) as f:
             conf = yaml.load(f, Loader=yaml.FullLoader)
 
+        hosts = conf["kafka"]["hostname"]
+        port = conf["kafka"]["port"]
+
         if value_type == "json":
             self.producer = KafkaProducer(
-                bootstrap_servers=['kafka1:9092','kafka2:9092','kafka3:9092'],
-                acks=1,
+                bootstrap_servers=[f'{hosts[0]}:{port}', f'{hosts[1]}:{port}',f'{hosts[2]}:{port}'],
+                acks=acks,
                 compression_type="gzip",
                 api_version=(0, 11, 5),
                 value_serializer=lambda x: dumps(x).encode("utf-8"),
@@ -20,12 +23,14 @@ class Producer:
 
         elif value_type == "string":
             self.producer = KafkaProducer(
-                bootstrap_servers=f"{conf['kafka']['hosts'][0]}:{conf['kafka']['port']},{conf['kafka']['hosts'][1]}:{conf['kafka']['port']},{conf['kafka']['hosts'][2]}:{conf['kafka']['port']}",
-                acks=1,
+                bootstrap_servers=[f'{hosts[0]}:{port}', f'{hosts[1]}:{port}',f'{hosts[2]}:{port}'],
+                acks=acks,
                 compression_type="gzip",
                 api_version=(0, 11, 5),
                 value_serializer=lambda x: x.encode("utf-8"),
             )
+
+            # key 를 넣을떈 아래 조건도 KafkaProducer에 추가
             # key_serializer=lambda x: x.encode("utf-8"),
 
     def __del__(self):
@@ -40,3 +45,10 @@ class Producer:
 
     def on_send_error(self, excp):
         log.error('I am an errback', exc_info=excp)
+
+
+
+class Consumer:
+
+    def __init__(self):
+        pass

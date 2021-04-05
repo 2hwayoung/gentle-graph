@@ -2,6 +2,10 @@ zookeeper:
   host: 3.36.242.26
 
 kafka:
+  hostname:
+    - kafka1
+    - kafka2
+    - kafka3
   hosts:
     - 52.78.57.50
     - 54.180.41.198

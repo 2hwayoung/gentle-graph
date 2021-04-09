@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/home/capje/kafka_tool/")
+
 import os
 import re
 import time
@@ -6,7 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from tqdm import tqdm
 from fake_useragent import UserAgent
-
+from kafka_module import *
 
 def str_to_int(string: str):
     value = 0
@@ -26,26 +29,24 @@ def str_to_int(string: str):
     return int(value)
 
 
-def crawl_detail_content(driver, data: dict) -> dict:
+def crawl_detail_content(driver, data: dict, producer) -> dict:
 
     if data == None:
         raise ValueError
 
     # go to content detail page
     driver.get(data["content_url"])
-    tag = driver.find_element_by_css_selector(
-        "#movie_player > div.html5-video-container > video"
-    )
-    tag.click()
+    js = 'document.getElementsByClassName("ytp-play-button ytp-button")[0].click()'
+    driver.execute_script(js)
 
     try:
-        button = driver.find_element_by_css_selector("paper-button#more")
-        button.click()
+        js = 'document.getElementsByClassName("more-button style-scope ytd-video-secondary-info-renderer")[0].click()'
+        driver.execute_script(js)
     except:
         pass
 
     driver.execute_script("window.scrollTo(0, 1500);")
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(3)
 
     # get detail information of content
     views = driver.find_element_by_css_selector(
@@ -109,7 +110,7 @@ def crawl_detail_content(driver, data: dict) -> dict:
         }
     )
 
-    print(data)
+    producer.send_to_topic(topic="youtube_contents", value=data)
 
     return data
 
@@ -191,11 +192,11 @@ def crawling(chrome_driver_path: str):
         }
         total_contents.append(data)
 
-        print(data)
+    producer = Producer("/home/capje/kafka_tool/config.yaml")
 
     # get detail info
     for content in tqdm(total_contents):
-        crawl_detail_content(driver, content)
+        crawl_detail_content(driver, content, producer)
 
     return total_contents
 

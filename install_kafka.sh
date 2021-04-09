@@ -33,22 +33,22 @@ echo @ Setting kafka data directory
 sudo mkdir -p ${PWD}/kafka_data1
 
 # set host info
-echo @ Setting zookeeper hosts info
+# echo @ Setting zookeeper hosts info
 
-echo >> /etc/hosts
-echo "# zookeeper server info" >> /etc/hosts
-for ((i=0 ; i<${broker_num} ; i++));
-do
-	idx=`expr $i + 1`
-	if [ $idx -eq $broker_id ];then
-		echo 0.0.0.0 zoo$idx >> /etc/hosts
-	else
-		echo ${zk_brokers[$i]} zoo$idx >> /etc/hosts
-	fi
-done
+# echo >> /etc/hosts
+# echo "# zookeeper server info" >> /etc/hosts
+# for ((i=0 ; i<${broker_num} ; i++));
+# do
+# 	idx=`expr $i + 1`
+# 	if [ $idx -eq $broker_id ];then
+# 		echo 0.0.0.0 zoo$idx >> /etc/hosts
+# 	else
+# 		echo ${zk_brokers[$i]} zoo$idx >> /etc/hosts
+# 	fi
+# done
 
-# set zookeeper conf
-echo @ Setting zookeeper config
+# set kafka conf
+echo @ Setting kafka config
 
 config_path=${PWD}/kafka/config/server.properties
 echo >> $config_path

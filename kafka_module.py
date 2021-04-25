@@ -1,7 +1,12 @@
+import os
+import sys
 import yaml
 from json import dumps
+from json import loads
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
+from kafka import TopicPartition
+
 
 class Producer:
     def __init__(self, config_file: str, value_type: str = "json", acks: int = 1):
@@ -14,7 +19,11 @@ class Producer:
 
         if value_type == "json":
             self.producer = KafkaProducer(
-                bootstrap_servers=[f'{hosts[0]}:{port}', f'{hosts[1]}:{port}',f'{hosts[2]}:{port}'],
+                bootstrap_servers=[
+                    f"{hosts[0]}:{port}",
+                    f"{hosts[1]}:{port}",
+                    f"{hosts[2]}:{port}",
+                ],
                 acks=acks,
                 compression_type="gzip",
                 api_version=(0, 11, 5),
@@ -23,7 +32,11 @@ class Producer:
 
         elif value_type == "string":
             self.producer = KafkaProducer(
-                bootstrap_servers=[f'{hosts[0]}:{port}', f'{hosts[1]}:{port}',f'{hosts[2]}:{port}'],
+                bootstrap_servers=[
+                    f"{hosts[0]}:{port}",
+                    f"{hosts[1]}:{port}",
+                    f"{hosts[2]}:{port}",
+                ],
                 acks=acks,
                 compression_type="gzip",
                 api_version=(0, 11, 5),
@@ -37,18 +50,69 @@ class Producer:
         self.producer.close()
 
     def send_to_topic(self, topic: str, value):
-        self.producer.send(topic=topic, value=value).add_callback(self.on_send_success).add_callback(self.on_send_error)
+        self.producer.send(topic=topic, value=value).add_callback(
+            self.on_send_success
+        ).add_callback(self.on_send_error)
         self.producer.flush()
 
     def on_send_success(self, metadata):
-        print('topic:', metadata.topic,'partition:', metadata.partition, 'offset:',metadata.offset)
+        print(
+            "topic:",
+            metadata.topic,
+            "partition:",
+            metadata.partition,
+            "offset:",
+            metadata.offset,
+        )
 
     def on_send_error(self, excp):
-        log.error('I am an errback', exc_info=excp)
-
+        log.error("I am an errback", exc_info=excp)
 
 
 class Consumer:
+    def __init__(
+        self, config_file: str, topic: str, group_id: str, value_type: str = "json"
+    ):
 
-    def __init__(self):
-        pass
+        with open(config_file) as f:
+            conf = yaml.load(f, Loader=yaml.FullLoader)
+
+        hosts = conf["kafka"]["hostname"]
+        port = conf["kafka"]["port"]
+
+        if value_type == "json":
+            self.consumer = KafkaConsumer(
+                bootstrap_servers=[
+                    f"{hosts[0]}:{port}",
+                    f"{hosts[1]}:{port}",
+                    f"{hosts[2]}:{port}",
+                ],
+                group_id=group_id,
+                auto_offset_reset="earliest",
+                enable_auto_commit=True,
+                value_deserializer=lambda x: loads(x.decode("utf-8")),
+                consumer_timeout_ms=1000,
+            )
+
+        elif value_type == "string":
+            self.consumer = KafkaConsumer(
+                bootstrap_servers=[
+                    f"{hosts[0]}:{port}",
+                    f"{hosts[1]}:{port}",
+                    f"{hosts[2]}:{port}",
+                ],
+                group_id=group_id,
+                auto_offset_reset="earliest",
+                enable_auto_commit=True,
+                value_deserializer=lambda x: x.decode("utf-8"),
+                consumer_timeout_ms=1000,
+            )
+
+    def get_data(self, topic: str):
+        tp = TopicPartition(topic, 0)
+        self.consumer.assign([tp])
+        self.consumer.poll(max_records=10, update_offsets=False)
+        data = []
+        for msg in self.consumer:
+            data.append(msg)
+        return data

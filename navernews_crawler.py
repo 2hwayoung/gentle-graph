@@ -26,6 +26,7 @@ def crawling(chrome_driver_path: str):
     userAgent = UserAgent().random
     headers = {'User-Agent':userAgent}
     res = requests.post(url_add, headers=headers)
+    crawl_time = time.strftime('%Y-%m-%d/%H', time.localtime(time.time()))
     # res = requests.post(url_add)
     press_link = []
     news_info = []
@@ -56,7 +57,10 @@ def crawling(chrome_driver_path: str):
         soup_tmp = bs(req, 'html.parser')
         #         res = requests.post(press_url, headers=headers)
         #         soup_tmp = bs(res.text,'html.parser')
-        press_news = soup_tmp.find('ul', {'class': 'rankingnews_list type_detail'}).find_all('li')
+        try:
+            press_news = soup_tmp.find('ul', {'class': 'rankingnews_list type_detail'}).find_all('li')
+        except:
+            pass
         #         print(press_news)
         for news in press_news:
             try:
@@ -93,7 +97,7 @@ def crawling(chrome_driver_path: str):
 
             driver.get(news_url)
             driver.implicitly_wait(10)
-            time.sleep(3)
+            time.sleep(1)
             rc = dict()
             for num in range(5):
                 #driver.implicitly_wait(5)
@@ -116,6 +120,7 @@ def crawling(chrome_driver_path: str):
                 n_comment = -1
             
             data = {
+                    "crawl_time": crawl_time,
                     "rank": news[2],
                     "date": date,
                     "url": news_url,

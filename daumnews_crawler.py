@@ -253,11 +253,11 @@ if __name__ == "__main__":
     print('time elapsed: ', end-start)
     print('data size: ', len(total_data))
 
-    import json
-    import datetime
-    time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H')
-    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'data/daum_data_{time_str}.json') 
+    # import json
+    # import datetime
+    # time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H')
+    # out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'data/daum_data_{time_str}.json') 
     
-    with open(out_dir, 'w') as f:
-        json.dump(total_data, f, indent="\t", ensure_ascii=False)
+    # with open(out_dir, 'w') as f:
+    #     json.dump(total_data, f, indent="\t", ensure_ascii=False)
 

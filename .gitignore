@@ -51,3 +51,6 @@ Thumbs.db
 # chrome driver
 chromedriver.*
 chromedriver*
+
+# data 
+/data

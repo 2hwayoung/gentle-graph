@@ -3,12 +3,13 @@ sys.path.append("/home/capje/kafka_tool/")
 
 import os
 import re
+import time
 import datetime
 from selenium import webdriver
 from fake_useragent import UserAgent
 from kafka_module import *
 
-def crawling(chrome_driver_path: str):
+def crawling(chrome_driver_path: str, crawl_time: str):
     # init chrome driver
     chrome_driver = chrome_driver_path
 
@@ -57,7 +58,7 @@ def crawling(chrome_driver_path: str):
     trends = driver.find_elements_by_css_selector("div.feed-list-wrapper")
     today_trends = trends[0].find_elements_by_css_selector("feed-item")
 
-    producer = Producer("/home/capje/kafka_tool/config.yaml")
+    # producer = Producer("/home/capje/kafka_tool/config.yaml")
 
     trends_list = []
     for trend in today_trends:
@@ -98,11 +99,12 @@ def crawling(chrome_driver_path: str):
             "rank": rank,
             "keyword": keyword,
             "news_url": news_url,
-            "created_time": created_time.strftime("%Y-%m-%d"),
+            "date": created_time.strftime("%Y-%m-%d"),
             "search_count": search_count,
+            "crawl_time": crawl_time
         }
 
-        producer.send_to_topic(topic="google_trend", value=data)
+        # producer.send_to_topic(topic="google_trend", value=data)
 
         trends_list.append(data)
 
@@ -110,5 +112,15 @@ def crawling(chrome_driver_path: str):
 
 
 if __name__ == "__main__":
+    crawl_time = time.strftime('%Y-%m-%d/%H', time.localtime(time.time()))
     chrome_driver_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chromedriver")
-    crawling(chrome_driver_path)
+    total_data = crawling(chrome_driver_path, crawl_time)
+    
+    import json
+    import datetime
+    time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H')
+    out_dir = os.path.join(os.path.abspath(__file__), f'/data/google_trend_data_{time_str}.json') 
+    
+    with open(out_dir, 'w') as f:
+        json.dump(total_data, f, indent="\t", ensure_ascii=False)
+

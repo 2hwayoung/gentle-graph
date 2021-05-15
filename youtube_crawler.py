@@ -4,12 +4,12 @@ sys.path.append("/home/capje/kafka_tool/")
 import os
 import re
 import time
-
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from tqdm import tqdm
 from fake_useragent import UserAgent
-from kafka_module import *
+from kafka_module import Producer
 
 def str_to_int(string: str):
     value = 0
@@ -35,7 +35,7 @@ def crawl_detail_content(driver, data: dict, producer) -> dict:
         raise ValueError
 
     # go to content detail page
-    driver.get(data["content_url"])
+    driver.get(data["url"])
     js = 'document.getElementsByClassName("ytp-play-button ytp-button")[0].click()'
     driver.execute_script(js)
 
@@ -49,31 +49,44 @@ def crawl_detail_content(driver, data: dict, producer) -> dict:
     driver.implicitly_wait(3)
 
     # get detail information of content
-    views = driver.find_element_by_css_selector(
-        "#count > ytd-video-view-count-renderer > span.view-count.style-scope.ytd-video-view-count-renderer"
-    ).text.replace(",", "")
-    views = re.findall("\d+", views)[0]
-    date = (
-        driver.find_element_by_css_selector("#date > yt-formatted-string")
-        .text.replace(".", "")
-        .split()
-    )
-    date = f"{date[0]}-{date[1]}-{date[2]}"
-    good = (
-        driver.find_element_by_css_selector(
-            "#top-level-buttons > ytd-toggle-button-renderer:nth-child(1) > a"
+    try:
+        views = driver.find_element_by_css_selector(
+            "#count > ytd-video-view-count-renderer > span.view-count.style-scope.ytd-video-view-count-renderer"
+        ).text.replace(",", "")
+        views = int(re.findall("\d+", views)[0])
+    except:
+        views = 0
+    try:
+        date = (
+            driver.find_element_by_css_selector("#date > yt-formatted-string")
+            .text.replace(".", "")
+            .split()
         )
-        .find_element_by_css_selector("#text")
-        .text
-    )
+        date = f"{date[0]}-{date[1]}-{date[2]}"
+    except:
+        date = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
+    
+    try:
+        good = (
+            driver.find_element_by_css_selector(
+                "#top-level-buttons > ytd-toggle-button-renderer:nth-child(1) > a"
+            )
+            .find_element_by_css_selector("#text")
+            .text
+        )
+    except:
+        good = 0
 
-    bad = (
-        driver.find_element_by_css_selector(
-            "#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a"
+    try:
+        bad = (
+            driver.find_element_by_css_selector(
+                "#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a"
+            )
+            .find_element_by_css_selector("#text")
+            .text
         )
-        .find_element_by_css_selector("#text")
-        .text
-    )
+    except:
+        bad = 0
 
     # 댓글 기능이 중지된 게시물도 있음
     try:
@@ -87,24 +100,27 @@ def crawl_detail_content(driver, data: dict, producer) -> dict:
     time.sleep(2)
 
     # get content description and hashtags
-    description = driver.find_element_by_css_selector("#description")
-    hashlist = description.find_elements_by_css_selector("a")
-    texts = description.find_elements_by_css_selector("span")
-    hashtags = [
-        tag.text
-        for tag in hashlist
-        if tag.text not in ("", " ") and tag.text.startswith("#")
-    ]
-    descriptions = [span.text for span in texts if span.text not in (" ", "")]
+    try:
+        description = driver.find_element_by_css_selector("#description")
+        hashlist = description.find_elements_by_css_selector("a")
+        texts = description.find_elements_by_css_selector("span")
+        hashtags = [
+            tag.text
+            for tag in hashlist
+            if tag.text not in ("", " ") and tag.text.startswith("#")
+        ]
+        descriptions = [span.text for span in texts if span.text not in (" ", "")]
+    except:
+        descriptions = ["",]  
 
     # append detail data
     data.update(
         {
-            "views": views,
+            "n_views": views,
             "date": date,
-            "good": str_to_int(good),
-            "bad": str_to_int(bad),
-            "comment": comments,
+            "n_reaction_good": str_to_int(good),
+            "n_reaction_bad": str_to_int(bad),
+            "n_comment": comments,
             "hashtags": hashtags,
             "description": descriptions,
         }
@@ -115,7 +131,7 @@ def crawl_detail_content(driver, data: dict, producer) -> dict:
     return data
 
 
-def crawling(chrome_driver_path: str):
+def crawling(chrome_driver_path: str, crawl_time : str):
     # init chrome driver
     chrome_driver = chrome_driver_path
 
@@ -172,8 +188,11 @@ def crawling(chrome_driver_path: str):
 
     # get brief info
     total_contents = []
-    for content in tqdm(playlist):
-        index = content.find_element_by_css_selector("#index").text
+    for content in playlist:
+        try:
+            index = int(content.find_element_by_css_selector("#index").text)
+        except:
+            index = 0
         video_info = content.find_element_by_css_selector("a#video-title")
         channel_info = content.find_element_by_css_selector(
             "ytd-channel-name#channel-name"
@@ -185,10 +204,11 @@ def crawling(chrome_driver_path: str):
 
         data = {
             "rank": index,
-            "content_url": url,
-            "content_title": title,
+            "url": url,
+            "title": title,
             "creator": creator,
             "creator_url": creator_channel,
+            "crawl_time" : crawl_time
         }
         total_contents.append(data)
 
@@ -202,5 +222,14 @@ def crawling(chrome_driver_path: str):
 
 
 if __name__ == "__main__":
+    crawl_time = time.strftime('%Y-%m-%d/%H', time.localtime(time.time()))
     chrome_driver_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chromedriver")
-    crawling(chrome_driver_path)
+    total_data = crawling(chrome_driver_path, crawl_time)
+
+    import json
+    import datetime
+    time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H')
+    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'data/youtube_data_{time_str}.json') 
+    
+    with open(out_dir, 'w') as f:
+        json.dump(total_data, f, indent="\t", ensure_ascii=False)

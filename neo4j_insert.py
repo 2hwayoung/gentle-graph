@@ -96,12 +96,12 @@ if __name__ == "__main__":
 
             app.create_content_and_match_with_info(value['url'], value['title'], value['date'], value['n_views'], value['n_comment'], \
                 value['n_reaction_good'], value['n_reaction_bad'], value['hashtags'], value['description'], \
-                value['crawl_time'], 'korea_popular', value['rank'], value['creator'], value['creator_url'], platform)
+                value['crawl_time'], 'korea_popular', value['rank'], value['creator'], platform)
 
             for elem in value['keyword']:
                 app.create_keyword(elem)
                 app.match_content_and_keyword(elem, value['url'], value['title'], value['date'], value['n_views'], value['n_comment'], \
-                    value['n_reaction_good'], value['n_reaction_bad'])
+                    value['n_reaction_good'], value['n_reaction_bad'], value['hashtags'], value['description'])
             
         app.close()
 

@@ -80,7 +80,6 @@ class App:
             "MATCH (k2:Keyword { name: $keyword2 }) "
             "CREATE (k1)-[:CONNECTS]->(k2)"
         )
-        
     @staticmethod
     def _find_and_return_crawltime(tx, crawl_time):
         query = (

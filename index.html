@@ -37,7 +37,6 @@ var force = d3.layout.force()
 
 d3.json("graphFile.json", function(json) {
 
-  console(json)
   force
       .nodes(json.nodes)
       .links(json.links)

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+  <style>
+    .background {
+      background-image: url('data/img/autumn1.jpg');
+    }
+
+    .nav {
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      justify-content: space-around;
+      font-size: 25px;
+      padding-top: 20px;
+    }
+
+    .content_nav {
+      font-size: 20px;
+      padding-top: 10px;
+      margin: 20px;
+    }
+
+    a { 
+      text-decoration: none;
+      color: black;
+    }
+
+    #logo {
+      font-size: 30px;
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <script src="clock.js"></script>
+
+  <div class="background">
+    <header class="nav">
+      <div class="logo">
+        <span class="material-icons" id="logo">
+          bubble_chart
+        </span>        
+        <span>
+          <a href="#logo">점잖은 그래프</a>
+        </span>
+      </div>
+      <div class="contents_nav">
+        <span class="content_nav">
+          <a href="#introduction">Introduction</a>
+        </span>
+        <span class="content_nav">
+          <a href="#member">Member</a>
+        </span>
+      </div>
+    </header>
+
+    <div class="search"></div>
+
+    <div class="info">
+      <div class="js-clock">
+        <h1>00:00</h1>
+      </div>
+
+      <div class="ranking"></div>
+    </div>
+    <div class="network"></div>
+
+  </div>
+  <div id="introduction"></div>
+  <div id="member"></div>
+</body>
+</html>

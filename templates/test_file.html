@@ -6,41 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="graph.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/8eb5905426.js" crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
-  <style>
-    .background {
-      background-image: url('data/img/autumn1.jpg');
-    }
-
-    .nav {
-      font-family: 'Noto Sans KR', sans-serif;
-      display: flex;
-      justify-content: space-around;
-      font-size: 25px;
-      padding-top: 20px;
-    }
-
-    .content_nav {
-      font-size: 20px;
-      padding-top: 10px;
-      margin: 20px;
-    }
-
-    a { 
-      text-decoration: none;
-      color: black;
-    }
-
-    #logo {
-      font-size: 30px;
-    }
-  </style>
-  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <title>Gentle Graph</title>
 </head>
 <body>
-  <script src="clock.js"></script>
-
+  
+  <div class="network"></div>
   <div class="background">
     <header class="nav">
       <div class="logo">
@@ -60,20 +37,40 @@
         </span>
       </div>
     </header>
-
-    <div class="search"></div>
-
-    <div class="info">
-      <div class="js-clock">
-        <h1>00:00</h1>
+    
+    <div class="search_section">
+      <div class="search">
+        <div>
+          <i class="fas fa-search"></i>
+        </div>
+        <form name=fsearch method=get style="margin:0px;" action="http://www.google.co.kr/search" target="_blank">
+          <input type=hidden name=where value="nexteach">
+          <input type="text" name=query required value="" placeholder="Google 검색 또는 URL 입력">
+        </form>
       </div>
-
-      <div class="ranking"></div>
     </div>
-    <div class="network"></div>
+    
+    <div class="information_section">
+      <div class="info">
+        <div class="js-clock">
+          <h1 class="clock-time">00:00</h1>
+        </div>
+        <div class="ranking">
+        </div>
+      </div>
+      <div class="tmp"></div>
+    </div>
 
+    <div class="bubble"></div>
+    
   </div>
   <div id="introduction"></div>
   <div id="member"></div>
+
+  <script src="clock.js"></script>
+  <script src="keyword_graph.js"></script>
+  <!-- <script src="graph.js"></script> -->
+  <script src="detail_contents.js"></script>
+  <!-- <script src="bubble.js"></script> -->
 </body>
 </html>

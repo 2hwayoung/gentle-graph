@@ -16,7 +16,7 @@ function draw_window(){
   // var color = d3.scale.category10();
 
 
-  d3.json("keyword_info.json", function(json) {
+  d3.json("keyword_info_2.json", function(json) {
   
     var nodes = [{},];
     for (var word_id in json) {
@@ -50,8 +50,9 @@ function draw_window(){
         .attr("dx", 0)
         .attr("dy", ".35em")
         .text(function(d) { return d.name })
+        .attr("class", "keyword")
         .attr("id", function(d) { return d.id; })
-        .attr("font-size", function(d) { return d.weights * 8 + 10;});
+        .attr("font-size", function(d) { return d.weights * 40 + 10;});
   
     var root = nodes[0];
     root.radius = 0;
@@ -76,35 +77,38 @@ function draw_detail(node_id){
         .attr("class", "detail");
         
   var force = d3.layout.force()
-      .gravity(.3)
+      .gravity(.2)
       .distance(1000)
       .charge(-1500)
       .size([width, height]);
       
 
-  d3.json("keyword_info.json", function(json) {
+  d3.json("keyword_info_2.json", function(json) {
 
           
     var target_node = json[node_id];
     var nodes = [{}, {'name' : target_node.name}];
     for (var idx in target_node.n_content) {
       var content = target_node.n_content[idx];
-      var tmp = {
-        'id': content[0],
-        'name': content[1],
-        'url': content[2],
-        'type': 'content',
-        'weights' : idx,
-      };
-      nodes.push(tmp);
+      content.type = 'content';
+      // var tmp = {
+      //   'id': content[0],
+      //   'name': content[1],
+      //   'url': content[2],
+      //   'type': 'content',
+      //   'weights' : idx,
+      // };
+      nodes.push(content);
     }
 
     for (var idx in target_node.n_key) {
-      var tmp = {
-        'name' : target_node.n_key[idx],
-        'type' : 'keyword',
-      };
-      nodes.push(tmp);
+      var content = target_node.n_key[idx];
+      content.type = 'keyword';
+      // var tmp = {
+      //   'name' : target_node.n_key[idx],
+      //   'type' : 'keyword',
+      // };
+      nodes.push(content);
     }
 
     var links = [];
@@ -134,7 +138,7 @@ function draw_detail(node_id){
         .attr("dx", 12)
         .attr("dy", ".35em")
         .text(function(d) { return d.name ; })
-        .attr("font-size", function(d) { return Math.random() * 50 + 30;});
+        .attr("font-size", function(d) { return d.weights * 50 + 30;});
   
         
     var contents = svg.selectAll(".content")
@@ -143,14 +147,14 @@ function draw_detail(node_id){
         .append("text")
         .attr("dx", 12)
         .attr("dy", ".35em")
-        .text(function(d) { return d.name ; })
-        .attr("font-size", function(d) { return Math.random() * 10 + 30;});
+        .text(function(d) { return d.title ; })
+        .attr("font-size", function(d) { return d.weights * 50 + 30;});
     
     var foci_keyword = {x: width * 0.25 , y: height * 0.5};
     var foci_content = {x: width * 0.25 , y: height * 0.5};
 
     function tick(){
-      node.attr("transform", function(d) { return "translate(" + (d.type == 'keyword' ? d.x - width * 0.20 :  d.x + width * 0.10 )+ "," + (d.type == 'content' ? d.y + d.weights * 50 - 100 : d.y ) + ")"; });
+      node.attr("transform", function(d) { return "translate(" + (d.type == 'keyword' ? d.x - width * 0.20 :  d.x + width * 0.10 )+ "," + (d.type == 'content' ? d.y + d.weights * 50 + 110 : d.y + 100 ) + ")"; });
     }
 
     force.on("tick", tick);

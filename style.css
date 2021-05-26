@@ -26,6 +26,7 @@ font-family: 'Roboto Condensed', sans-serif;
 a { 
     text-decoration: none;
     color: black;
+    font-weight: bold;
 }
 
 #logo {
@@ -72,11 +73,13 @@ input {
 .clock-time {
     font-size: 150px;
     font-family: 'Heebo', sans-serif;
+    color: rgba(255, 255, 255, 1);
 }
 
 .clock-time-sec {
     font-size: 60px;
     font-family: 'Heebo', sans-serif;
+    color: rgba(255, 255, 255, 1);
 }
 
 .network {

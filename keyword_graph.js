@@ -148,7 +148,7 @@ function draw_detail(node_id){
         .attr("dx", 12)
         .attr("dy", ".35em")
         .text(function(d) { return d.title ; })
-        .attr("font-size", function(d) { return d.weights * 50 + 30;});
+        .attr("font-size", function(d) { return d.weights * 20 + 20;});
     
     var foci_keyword = {x: width * 0.25 , y: height * 0.5};
     var foci_content = {x: width * 0.25 , y: height * 0.5};

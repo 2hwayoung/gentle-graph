@@ -1,75 +1,103 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
-<style>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&family=Nanum+Gothic:wght@800&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-.link {
-  stroke: #aaa;
-}
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='graph.css') }}" rel="stylesheet" type="text/css" />
+    
+    <script src="https://kit.fontawesome.com/8eb5905426.js" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>Gentle Graph</title>
+  </head>
+  <body>
+    <div id="header_background">
+      <header class="nav">
+        <div class="logo">
+          <span class="material-icons text" id="logo">
+            bubble_chart
+          </span>        
+          <span>
+            <a href="#logo" class="text">점잖은 그래프</a>
+          </span>
+        </div>
+        <div class="contents_nav">
+          <span class="content_nav">
+            <a href="#introduction" class="text">Introduction</a>
+          </span>
+          <span class="content_nav">
+            <a href="#member" class="text">Member</a>
+          </span>
+        </div>
+      </header>
+      <div class="network"></div>
+    <div class="information_section">
+      <div class="info">
+        <div class="js-clock">
+          <span class="clock-time text" >00:00</span><span class="clock-time-sec text">00</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="search_section">
+      <div class="search">
+        <div>
+          <i class="fas fa-search"></i>
+        </div>
+        <form name=fsearch method=get style="margin:0px;" action="http://www.google.co.kr/search" target="_blank">
+          <input type=hidden name=where value="nexteach">
+          <input type="text" name=query required value="" placeholder="Google 검색 또는 URL 입력">
+        </form>
+      </div>
+    </div>
+  </div>
 
-.node text {
-stroke:#333;
-cursos:pointer;
-}
+  <div class="bar"></div>
 
-.node circle{
-stroke:#fff;
-stroke-width:3px;
-fill:#555;
-}
+  <div id="introduction">
+    <div class="reset">
+      <div class="title">
+        <h1>Introduction</h1>
+      </div>
+      <div>
+        <h3 class="intro-content">마케팅 목적, 정치적 목적 등을 배제한 객관적인 사용자 행동 기반의 실시간 이슈트렌드를 보여줄 수 있는 서비스를 제안합니다. </h3>
+      </div>
+      <div>
+        <h3 class="intro-content">이를 통해 개인의 가치 판단을 도와줄 수 있는 객관적이고 우리 사회를 포괄할 수 있는 지표를 제시하고자 이 프로젝트를 진행했습니다.</h3>
+      </div>
+    </div>
+  </div>
 
-</style>
-<body>
-<script>
+  <div id="member">
+    <div class="reset">
+      <div class="title">
+        <h1>Member</h1>
+      </div>
+      <div>
+        <img src="{{ url_for('static', filename='member.png') }}" alt="">
+      </div>
+    </div>
+  </div>
+  
+  <div id="tail"></div>
 
-var width = 960,
-    height = 500
+  <!-- <script src="/static/clock.js"></script>
+  <script src="/static/keyword_graph.js"></script>
+  <script src="/static/detail_contents.js"></script> -->
+  <script type="text/javascript" src="{{ url_for('static', filename='keyword_info_2.json') }}"></script>
+  <script src="{{ url_for('static', filename='clock.js') }}"></script>
+  <script src="{{ url_for('static', filename='keyword_graph.js') }}"></script>
+  <script src="{{ url_for('static', filename='detail_contents.js') }}"></script>
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-var force = d3.layout.force()
-    .gravity(.05)
-    .distance(100)
-    .charge(-100)
-    .size([width, height]);
-
-d3.json("data/graphFile.json", function(json) {
-
-  force
-      .nodes(json.nodes)
-      .links(json.links)
-      .start();
-
-  var link = svg.selectAll(".link")
-      .data(json.links)
-    .enter().append("line")
-      .attr("class", "link")
-    .style("stroke-width", function(d) { return Math.sqrt(d.weight); });
-
-  var node = svg.selectAll(".node")
-      .data(json.nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .call(force.drag);
-
-  node.append("circle")
-      .attr("r","5");
-
-  node.append("text")
-      .attr("dx", 12)
-      .attr("dy", ".35em")
-      .text(function(d) { return d.name });
-
-  force.on("tick", function() {
-    link.attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
-
-    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-  });
-});
-
-</script>
+</body>
+</html>

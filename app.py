@@ -4,22 +4,11 @@ import json
 
 
 def create_app():
-    app = Flask(__name__, static_folder='./data/')
+    app = Flask(__name__, static_folder='./static/')
     CORS(app)
 
     @app.route('/')
     def index():
         return render_template('index.html')
-        
-    @app.route('/test')
-    def test():
 
-        data = json.loads("./data/graphFile.json")
-    
-        return jsonify(data)
-
-    @app.route('/node')
-    def node():
-        return render_template('index2.html')
-    
     return app

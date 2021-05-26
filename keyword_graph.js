@@ -87,10 +87,11 @@ function draw_detail(node_id){
 
           
     var target_node = json[node_id];
-    var nodes = [{}, {'name' : target_node.name}];
+    var nodes = [{}, {'name' : target_node.name, 'type' : 'keyword', 'weights' : 2}];
     for (var idx in target_node.n_content) {
       var content = target_node.n_content[idx];
       content.type = 'content';
+      content.cnt = idx;
       // var tmp = {
       //   'id': content[0],
       //   'name': content[1],
@@ -154,7 +155,7 @@ function draw_detail(node_id){
     var foci_content = {x: width * 0.25 , y: height * 0.5};
 
     function tick(){
-      node.attr("transform", function(d) { return "translate(" + (d.type == 'keyword' ? d.x - width * 0.20 :  d.x + width * 0.10 )+ "," + (d.type == 'content' ? d.y + d.weights * 50 + 110 : d.y + 100 ) + ")"; });
+      node.attr("transform", function(d) { return "translate(" + (d.type == 'keyword' ? d.x - width * 0.20 :  d.x + width * 0.10 )+ "," + (d.type == 'content' ? d.y + d.cnt * 50 - 200 : d.y + 100 ) + ")"; });
     }
 
     force.on("tick", tick);

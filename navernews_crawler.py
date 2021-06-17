@@ -19,6 +19,14 @@ from kafka_module import *
 #    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'}
 #path = os.path.join(os.getcwd(), "chromedriver")
 
+def comma_elim(val):
+    if val == '':
+        return 0
+    else:
+        if ',' in val:
+            return int(''.join(val.split(',')))
+        else:
+            return int(val)
 
 def crawling(chrome_driver_path: str):
     url = 'https://news.naver.com'
@@ -103,17 +111,17 @@ def crawling(chrome_driver_path: str):
                 #driver.implicitly_wait(5)
                 elem = driver.find_element_by_xpath('//*[@id="spiLayer"]/div[1]/ul/li[' + str(num + 1) + ']/a/span[2]')
                 if num == 0:
-                    rc['good'] = elem.text
+                    rc['good'] = comma_elim(elem.text)
                 elif num == 1:
-                    rc['warm'] = elem.text
+                    rc['warm'] = comma_elim(elem.text)
                 elif num == 2:
-                    rc['sad'] = elem.text
+                    rc['sad'] = comma_elim(elem.text)
                 elif num == 3:
-                    rc['angry'] = elem.text
+                    rc['angry'] = comma_elim(elem.text)
                 else:
-                    rc['want'] = elem.text
+                    rc['want'] = comma_elim(elem.text)
             try:
-                driver.implicitly_wait(10)
+                driver.implicitly_wait(5)
                 n_comment = driver.find_element_by_xpath('//*[@id="cbox_module"]/div[2]/div[1]/a/span[1]')
                 n_comment = int(n_comment.text.replace(',', ''))
             except:
@@ -131,6 +139,7 @@ def crawling(chrome_driver_path: str):
                     "n_reaction_sad": rc['sad'],
                     "n_reaction_angry": rc['angry'],
                     "n_reaction_want": rc['want'],
+                    "n_reactions": rc['good']+rc['warm']+rc['sad']+rc['angry']+rc['want'],
                     "n_view": news[1],
                     "n_comment": n_comment
                 }

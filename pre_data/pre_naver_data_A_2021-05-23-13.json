@@ -1,0 +1,78 @@
+[
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 1,
+        "date": "2021.05.23. 오전 5:38",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696282&rankingType=RANKING",
+        "title": "'멀기만 한 10만전자' 삼성전자 목표가 잇단 하향, 반등할까",
+        "press": "머니S",
+        "n_reaction_good": 6,
+        "n_reaction_warm": 2,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 38,
+        "n_reaction_want": 3,
+        "n_view": 2535,
+        "n_comment": 63,
+        "n_reactions": 50,
+        "keyword": [
+            "삼성전자"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 2,
+        "date": "2021.05.23. 오전 10:31",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696319&rankingType=RANKING",
+        "title": "전화서 들린 지인 성관계 소리 녹음… \"10억 달라\" 협박한 50대 여성 집유",
+        "press": "머니S",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 21,
+        "n_reaction_want": 1,
+        "n_view": 2514,
+        "n_comment": 9,
+        "n_reactions": 24,
+        "keyword": []
+    },
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 3,
+        "date": "2021.05.23. 오전 10:20",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696317&rankingType=RANKING",
+        "title": "손정민씨 아버지 \"카이스트 다니게 할 걸, 밤에 내보내지 말 걸 무한 후회\"",
+        "press": "머니S",
+        "n_reaction_good": 2,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 85,
+        "n_reaction_angry": 7,
+        "n_reaction_want": 38,
+        "n_view": 1997,
+        "n_comment": 20,
+        "n_reactions": 132,
+        "keyword": [
+            "카이스트",
+            "아버지",
+            "손정민"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 4,
+        "date": "2021.05.23. 오전 9:30",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696306&rankingType=RANKING",
+        "title": "‘출발은 우려, 성과는 큼지막’… 문 대통령 방미, ‘백신·반도체’ 협력 등 결실",
+        "press": "머니S",
+        "n_reaction_good": 102,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 194,
+        "n_reaction_want": 3,
+        "n_view": 1732,
+        "n_comment": -1,
+        "n_reactions": 300,
+        "keyword": [
+            "대통령"
+        ]
+    }
+]

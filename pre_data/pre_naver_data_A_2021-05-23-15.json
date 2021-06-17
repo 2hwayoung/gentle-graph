@@ -1,0 +1,208 @@
+[
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 1,
+        "date": "2021.05.23. 오전 10:20",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696317&rankingType=RANKING",
+        "title": "손정민씨 아버지 \"카이스트 다니게 할 걸, 밤에 내보내지 말 걸 무한 후회\"",
+        "press": "머니S",
+        "n_reaction_good": 10,
+        "n_reaction_warm": 2,
+        "n_reaction_sad": 1298,
+        "n_reaction_angry": 93,
+        "n_reaction_want": 439,
+        "n_view": 27159,
+        "n_comment": 308,
+        "n_reactions": 1842,
+        "keyword": [
+            "카이스트",
+            "아버지",
+            "손정민"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 2,
+        "date": "2021.05.23. 오후 1:31",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696345&rankingType=RANKING",
+        "title": "美 경제외교 이끈 최태원 회장… \"반도체·배터리·바이오 투자 확대\"",
+        "press": "머니S",
+        "n_reaction_good": 12,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 24,
+        "n_reaction_want": 1,
+        "n_view": 1611,
+        "n_comment": 7,
+        "n_reactions": 37,
+        "keyword": [
+            "최태원"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 3,
+        "date": "2021.05.23. 오전 5:38",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696282&rankingType=RANKING",
+        "title": "'멀기만 한 10만전자' 삼성전자 목표가 잇단 하향, 반등할까",
+        "press": "머니S",
+        "n_reaction_good": 7,
+        "n_reaction_warm": 2,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 48,
+        "n_reaction_want": 3,
+        "n_view": 1526,
+        "n_comment": 70,
+        "n_reactions": 61,
+        "keyword": [
+            "삼성전자"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 4,
+        "date": "2021.05.23. 오전 11:26",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696329&rankingType=RANKING",
+        "title": "한·미·일 매출 100대 기업 ESG 성적보니… 일본 '1등'·한국 '꼴찌'",
+        "press": "머니S",
+        "n_reaction_good": 1,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 3,
+        "n_reaction_angry": 13,
+        "n_reaction_want": 2,
+        "n_view": 1363,
+        "n_comment": 22,
+        "n_reactions": 19,
+        "keyword": []
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 5,
+        "date": "2021.05.23. 오전 11:02",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696323&rankingType=RANKING",
+        "title": "“가상화폐 거품 꼈다”… 이더리움 창시자의 진단",
+        "press": "머니S",
+        "n_reaction_good": 5,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 2,
+        "n_reaction_want": 0,
+        "n_view": 1121,
+        "n_comment": 12,
+        "n_reactions": 9,
+        "keyword": [
+            "창시자"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 6,
+        "date": "2021.05.23. 오전 9:30",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696306&rankingType=RANKING",
+        "title": "‘출발은 우려, 성과는 큼지막’… 문 대통령 방미, ‘백신·반도체’ 협력 등 결실",
+        "press": "머니S",
+        "n_reaction_good": 126,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 280,
+        "n_reaction_want": 3,
+        "n_view": 1083,
+        "n_comment": -1,
+        "n_reactions": 410,
+        "keyword": [
+            "대통령"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 7,
+        "date": "2021.05.23. 오전 11:03",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696324&rankingType=RANKING",
+        "title": "스타벅스 ‘YES or NO 프라푸치노’ … “내가 선택한 레시피로 음료가 출시된다면?”",
+        "press": "머니S",
+        "n_reaction_good": 2,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 0,
+        "n_reaction_want": 0,
+        "n_view": 943,
+        "n_comment": 0,
+        "n_reactions": 2,
+        "keyword": [
+            "스타벅스"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 8,
+        "date": "2021.05.23. 오전 10:10",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696315&rankingType=RANKING",
+        "title": "유행처럼 번지는 ‘민식이법 놀이’… “애들이 스쿨존에 차오면 뛰어든다”",
+        "press": "머니S",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 2,
+        "n_reaction_angry": 100,
+        "n_reaction_want": 2,
+        "n_view": 901,
+        "n_comment": 55,
+        "n_reactions": 104,
+        "keyword": [
+            "민식"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 9,
+        "date": "2021.05.23. 오전 4:04",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696268&rankingType=RANKING",
+        "title": "땅 사서 아파트 팔아 부자된 건설업체들 베일 벗나",
+        "press": "머니S",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 26,
+        "n_reaction_want": 6,
+        "n_view": 758,
+        "n_comment": 25,
+        "n_reactions": 33,
+        "keyword": []
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 10,
+        "date": "2021.05.23. 오전 11:40",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696332&rankingType=RANKING",
+        "title": "“정부기관 보유 금 현금화하자”… 억대 사기 60대, 징역 1년 6개월 선고에 항소",
+        "press": "머니S",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 4,
+        "n_reaction_want": 1,
+        "n_view": 441,
+        "n_comment": 2,
+        "n_reactions": 5,
+        "keyword": [
+            "징역",
+            "정부"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/15",
+        "rank": 11,
+        "date": "2021.05.23. 오전 5:50",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696284&rankingType=RANKING",
+        "title": "콘솔게임, 이젠 넷플릭스처럼 집에서 구독한다?… 클라우드 게임 시대 '개막'",
+        "press": "머니S",
+        "n_reaction_good": 4,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 3,
+        "n_reaction_want": 0,
+        "n_view": 329,
+        "n_comment": 11,
+        "n_reactions": 7,
+        "keyword": []
+    }
+]

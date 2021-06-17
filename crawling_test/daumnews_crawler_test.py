@@ -7,7 +7,7 @@ sys.path.append("/home/capje/kafka_tool/")
 # from kafka_module import *
 import re
 import time
-
+import datetime
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -17,6 +17,8 @@ import json
 import os
 from tqdm import tqdm
 import logging
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def str_to_int(string: str):
     value = 0
@@ -42,61 +44,86 @@ def crawl_content(soup, driver, category, ranking_box_class, num, crawl_time):
     lst = []
 
     # 기사 외부 정보 가져오기
-    for num in tqdm(range(num)):
+    for num in tqdm(range(len(ranking_box))):
         d = dict()
         d['crawl_time'] = crawl_time # 크롤링한 날짜
-        d['rank'] = int(ranking_box[num].find(class_="screen_out").get_text())  # 순위
+        try:
+            d['rank'] = int(ranking_box[num].find(class_="screen_out").get_text())  # 순위
+        except:
+            d['rank'] = 0 # error
+        
         d['category'] = category
-
         news_info = contents_box[num].find(class_="tit_thumb")
         d['url'] = news_info.find('a')['href']  # url
         d['title'] = news_info.find('a').get_text()  # 제목
-        d['press'] = news_info.find(class_='info_news').get_text()  # 언론사
+        try:
+            d['press'] = news_info.find(class_='info_news').get_text()  # 언론사
+        except:
+            d['press'] = 'None'
 
         lst.append(d)
 
     # 기사 내부 정보 가져오기
     for link in tqdm(lst):
-        resp = requests.get(link['url'])
+        resp = requests.get(link['url'], verify=False)
         soup = BeautifulSoup(resp.text, "lxml")
         info = soup.find(class_='info_view')
         link['date'] = info.find(class_='num_date').get_text()  # 입력날짜
-        print(link['date'])
+
         driver.get(link['url'])
-        driver.implicitly_wait(5)
-        
+        # print(link['url'])
+        driver.implicitly_wait(3)
         # print("내부")
         try:
             link['n_comment'] = str_to_int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
         except:
-            link['n_comment'] = -1
-        
+            link['n_comment'] = 0
+
         try:
             foot = driver.find_element_by_css_selector(
                 '#mArticle > div.foot_view > div.emotion_wrap > div.emotion_list > div > div > div')
-            link['n_reaction_recommend'] = str_to_int(foot.find_element_by_css_selector(
-                'div.selectionbox.type-RECOMMEND.unselected > span.count').text)  # 추천해요 수
-            link['n_reaction_like'] = str_to_int(foot.find_element_by_css_selector(
-                'div.selectionbox.type-LIKE.unselected > span.count').text)  # 좋아요 수
-            link['n_reaction_impress'] = str_to_int(foot.find_element_by_css_selector(
-                'div.selectionbox.type-IMPRESS.unselected > span.count').text)  # 감동이에요 수
-            link['n_reaction_angry'] = str_to_int(foot.find_element_by_css_selector(
-                'div.selectionbox.type-ANGRY.unselected > span.count').text)  # 화나요 수
-            link['n_reaction_sad'] = str_to_int(foot.find_element_by_css_selector(
-                'div.selectionbox.type-SAD.unselected > span.count').text)  # 슬퍼요 수
-            # 전체 반응 수
-            link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
-                                + link['n_reaction_impress'] + link['n_reaction_angry'] \
-                                + link['n_reaction_sad'])
         except:
-            logging.info("url("+link['url']+") occured an error: please check the url has ['n_reaction']")
-            link['n_reaction_recommend'] = -1
-            link['n_reaction_like'] = -1
-            link['n_reaction_impress'] = -1
-            link['n_reaction_angry'] = -1
-            link['n_reaction_sad'] = -1
-            link['n_reactions'] = -1
-
+            logging.info("url(`"+link['url']+") occured an error: please check the url has ['n_reaction']")
+            link['n_reaction_recommend'] = 0
+            link['n_reaction_like'] = 0
+            link['n_reaction_impress'] = 0
+            link['n_reaction_angry'] = 0
+            link['n_reaction_sad'] = 0
+            link['n_reactions'] = 0
+        else:
+            try:            
+                link['n_reaction_recommend'] = str_to_int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-RECOMMEND.unselected > span.count').text)  # 추천해요 수
+            except:
+                link['n_reaction_recommend'] = 0
+            try:
+                link['n_reaction_like'] = str_to_int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-LIKE.unselected > span.count').text)  # 좋아요 수
+            except:
+                link['n_reaction_like'] = 0
+            try:
+                link['n_reaction_impress'] = str_to_int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-IMPRESS.unselected > span.count').text)  # 감동이에요 수
+            except:
+                link['n_reaction_impress'] = 0
+            try:
+                link['n_reaction_angry'] = str_to_int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-ANGRY.unselected > span.count').text)  # 화나요 수
+            except:
+                link['n_reaction_angry'] = 0
+            try:
+                link['n_reaction_sad'] = str_to_int(foot.find_element_by_css_selector(
+                    'div.selectionbox.type-SAD.unselected > span.count').text)  # 슬퍼요 수
+            except:
+                link['n_reaction_sad'] = 0
+            try:
+                # 전체 반응 수
+                link['n_reactions'] = link['n_reaction_recommend'] + link['n_reaction_like'] \
+                                    + link['n_reaction_impress'] + link['n_reaction_angry'] \
+                                    + link['n_reaction_sad']
+            except:
+                link['n_reactions'] = 0
+        
         # producer.send_to_topic(topic="daum_news", value=link)
 
     return lst
@@ -125,58 +152,87 @@ def crawl_content_by_age(soup, driver, category, crawl_time):
                 d['age'] = age  # 연령대
                 d['sex'] = sex  # 성별
                 d['rank'] = num + 1  # 순위
-                d['url'] = news_list[num]['href']  # url
-                d['title'] = news_list[num].get_text()  # 제목
-                d['press'] = press_list[num].get_text()  # 언론사
+                try:
+                    d['url'] = news_list[num]['href']  # url
+                except:
+                    continue
+                try:
+                    d['title'] = news_list[num].get_text()  # 제목
+                except:
+                    continue
+                try:
+                    d['press'] = press_list[num].get_text()  # 언론사
+                except:
+                    d['press'] = 'None'
+
                 l.append(d)
 
             # 기사 내부 정보 가져오기
             for link in l:
-                resp = requests.get(link['url'])
+                resp = requests.get(link['url'], verify=False)
                 soup = BeautifulSoup(resp.text, "lxml")
                 info = soup.find(class_='info_view')
-                link['date'] = info.find(class_='num_date').get_text()  # 입력날짜
-
+                try:
+                    link['date'] = info.find(class_='num_date').get_text()  # 입력날짜
+                except:
+                    link['date'] = 'error'
+                
                 driver.get(link['url'])
                 # print(link['url'])
-                time.sleep(0.5)
-                driver.implicitly_wait(3)
                 # print("내부")
                 try:
                     link['n_comment'] = str_to_int(driver.find_element_by_css_selector('#alex-header > em').text)  # 댓글수
                 except:
-                    link['n_comment'] = -1
+                    link['n_comment'] = 0
 
                 try:
                     foot = driver.find_element_by_css_selector(
                         '#mArticle > div.foot_view > div.emotion_wrap > div.emotion_list > div > div > div')
-                    link['n_reaction_recommend'] = str_to_int(foot.find_element_by_css_selector(
-                        'div.selectionbox.type-RECOMMEND.unselected > span.count').text)  # 추천해요 수
-                    link['n_reaction_like'] = str_to_int(foot.find_element_by_css_selector(
-                        'div.selectionbox.type-LIKE.unselected > span.count').text)  # 좋아요 수
-                    link['n_reaction_impress'] = str_to_int(foot.find_element_by_css_selector(
-                        'div.selectionbox.type-IMPRESS.unselected > span.count').text)  # 감동이에요 수
-                    link['n_reaction_angry'] = str_to_int(foot.find_element_by_css_selector(
-                        'div.selectionbox.type-ANGRY.unselected > span.count').text)  # 화나요 수
-                    link['n_reaction_sad'] = str_to_int(foot.find_element_by_css_selector(
-                        'div.selectionbox.type-SAD.unselected > span.count').text)  # 슬퍼요 수
-                    # 전체 반응 수
-                    link['n_reactions'] = str(link['n_reaction_recommend'] + link['n_reaction_like'] \
-                                        + link['n_reaction_impress'] + link['n_reaction_angry'] \
-                                        + link['n_reaction_sad'])
                 except:
                     logging.info("url(`"+link['url']+") occured an error: please check the url has ['n_reaction']")
-                    link['n_reaction_recommend'] = -1
-                    link['n_reaction_like'] = -1
-                    link['n_reaction_impress'] = -1
-                    link['n_reaction_angry'] = -1
-                    link['n_reaction_sad'] = -1
-                    link['n_reactions'] = -1
+                    link['n_reaction_recommend'] = 0
+                    link['n_reaction_like'] = 0
+                    link['n_reaction_impress'] = 0
+                    link['n_reaction_angry'] = 0
+                    link['n_reaction_sad'] = 0
+                    link['n_reactions'] = 0
+                else:
+                    try:            
+                        link['n_reaction_recommend'] = str_to_int(foot.find_element_by_css_selector(
+                            'div.selectionbox.type-RECOMMEND.unselected > span.count').text)  # 추천해요 수
+                    except:
+                        link['n_reaction_recommend'] = 0
+                    try:
+                        link['n_reaction_like'] = str_to_int(foot.find_element_by_css_selector(
+                            'div.selectionbox.type-LIKE.unselected > span.count').text)  # 좋아요 수
+                    except:
+                        link['n_reaction_like'] = 0
+                    try:
+                        link['n_reaction_impress'] = str_to_int(foot.find_element_by_css_selector(
+                            'div.selectionbox.type-IMPRESS.unselected > span.count').text)  # 감동이에요 수
+                    except:
+                        link['n_reaction_impress'] = 0
+                    try:
+                        link['n_reaction_angry'] = str_to_int(foot.find_element_by_css_selector(
+                            'div.selectionbox.type-ANGRY.unselected > span.count').text)  # 화나요 수
+                    except:
+                        link['n_reaction_angry'] = 0
+                    try:
+                        link['n_reaction_sad'] = str_to_int(foot.find_element_by_css_selector(
+                            'div.selectionbox.type-SAD.unselected > span.count').text)  # 슬퍼요 수
+                    except:
+                        link['n_reaction_sad'] = 0
+                    try:
+                        # 전체 반응 수
+                        link['n_reactions'] = link['n_reaction_recommend'] + link['n_reaction_like'] \
+                                            + link['n_reaction_impress'] + link['n_reaction_angry'] \
+                                            + link['n_reaction_sad']
+                    except:
+                        link['n_reactions'] = 0
                 
                 # producer.send_to_topic(topic="daum_news", value=link)
 
         lst += l
-        # print(l)
     return lst
 
 
@@ -184,17 +240,12 @@ def crawling(chrome_driver_path: str):
     # init chrome driver
     chrome_driver = chrome_driver_path
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('headless')
-    chrome_options.add_argument("--window-size=1920,1080")
 
+    chrome_options.add_argument('headless')
     userAgent = UserAgent().random
-    headers = {'User-Agent':userAgent}
-    chrome_options.add_argument('user-agent=' + headers['User-Agent'])
-    
-    
+    chrome_options.add_argument(f"user-agent={userAgent}")
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument("--disable-gpu")
     
     prefs = {
         "profile.default_content_setting_values": {
@@ -230,7 +281,9 @@ def crawling(chrome_driver_path: str):
     # p = Producer("/home/capje/kafka_tool/config.yaml", value_type="json")
     
     date = time.strftime('%Y%m%d', time.localtime(time.time()))
-    crawl_time = time.strftime('%Y-%m-%d/%H', time.localtime(time.time()))
+    date = datetime.datetime.strptime('20210520', '%Y%m%d')
+    crawl_time = datetime.datetime.strptime('2021-05-20/00', '%Y-%m-%d/%H')
+
     tags = ["popular/news", "popular/entertain", "popular/sports", "kkomkkom/news",
             "kkomkkom/entertain", "kkomkkom/sports", "bestreply/", "age/"]
     news_list = []
@@ -241,7 +294,7 @@ def crawling(chrome_driver_path: str):
     # for i in tqdm(range(len(tags))):
        # tag = tags[i]
         url = "https://news.daum.net/ranking/" + tag + "?regDate=" + str(date)
-        resp = requests.get(url)
+        resp = requests.get(url, verify=False)
         soup = BeautifulSoup(resp.text, "lxml")
 
         main_tag, category_tag = tag.split('/')
@@ -264,10 +317,11 @@ if __name__ == "__main__":
     print('time elapsed: ', end-start)
     print('data size: ', len(total_data))
 
-    import json
-    import datetime
-    time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H')
-    out_dir = os.join(os.path.abspath(__file__), f'/data/daum_data_{time_str}.json') 
+    time_str = datetime.datetime.strptime('2021-05-20-10', '%Y-%m-%d-%H')
+    print(time_str)
+
+    out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'data/daum_data_{time_str}.json') 
+
     
     with open(out_dir, 'w') as f:
         json.dump(total_data, f, indent="\t", ensure_ascii=False)

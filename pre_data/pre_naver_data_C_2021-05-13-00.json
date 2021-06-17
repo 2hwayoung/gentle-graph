@@ -1,0 +1,107 @@
+[
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 1,
+        "date": "2021.05.12. 오후 9:07",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=092&aid=0002221885&rankingType=RANKING",
+        "title": "삼성·LG, 코로나19 백신 접종 직원에 유급휴가",
+        "press": "ZDNet Korea",
+        "n_reaction_good": 10,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 5,
+        "n_reaction_want": 2,
+        "n_view": 821,
+        "n_comment": 8,
+        "n_reactions": 17,
+        "keyword": [
+            "삼성",
+            "LG"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 2,
+        "date": "2021.05.12. 오후 8:47",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=092&aid=0002221884&rankingType=RANKING",
+        "title": "文-바이든 첫 정상회담에 SK·삼성·LG 수장도 간다",
+        "press": "ZDNet Korea",
+        "n_reaction_good": 5,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 46,
+        "n_reaction_want": 0,
+        "n_view": 756,
+        "n_comment": 36,
+        "n_reactions": 52,
+        "keyword": [
+            "정상회담",
+            "삼성",
+            "SK",
+            "바이든",
+            "LG",
+            "수장"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 3,
+        "date": "2021.05.12. 오후 9:22",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=092&aid=0002221886&rankingType=RANKING",
+        "title": "샤오미, 美 정부 '블랙리스트'에서 빠졌다",
+        "press": "ZDNet Korea",
+        "n_reaction_good": 1,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 17,
+        "n_reaction_want": 0,
+        "n_view": 705,
+        "n_comment": 9,
+        "n_reactions": 18,
+        "keyword": [
+            "샤오미",
+            "정부"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 4,
+        "date": "2021.05.12. 오후 12:26",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=092&aid=0002221814&rankingType=RANKING",
+        "title": "AWS에 취직한 자바의 아버지 \"에지 컴퓨팅에 푹 빠졌다\"",
+        "press": "ZDNet Korea",
+        "n_reaction_good": 17,
+        "n_reaction_warm": 4,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 0,
+        "n_reaction_want": 1,
+        "n_view": 563,
+        "n_comment": 7,
+        "n_reactions": 22,
+        "keyword": [
+            "AWS",
+            "아버지",
+            "자바"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 5,
+        "date": "2021.05.12. 오전 10:10",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=092&aid=0002221778&rankingType=RANKING",
+        "title": "코로나 비상 걸린 인도…삼성·LG도 초비상",
+        "press": "ZDNet Korea",
+        "n_reaction_good": 14,
+        "n_reaction_warm": 2,
+        "n_reaction_sad": 12,
+        "n_reaction_angry": 7,
+        "n_reaction_want": 2,
+        "n_view": 498,
+        "n_comment": 15,
+        "n_reactions": 37,
+        "keyword": [
+            "삼성",
+            "LG"
+        ]
+    }
+]

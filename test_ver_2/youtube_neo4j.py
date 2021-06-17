@@ -29,9 +29,16 @@ class App:
 
     def create_content_and_match_with_info(self, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform):
         with self.driver.session() as session:
-            result = session.write_transaction(
-                self._create_content_and_match_with_info, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform
-            )
+            # 해당 crawl_time에 content가 존재하는지 확인
+            result = session.read_transaction(self._find_and_return_content, url, crawl_time)
+            if len(result) == 0:
+                result = session.write_transaction(
+                    self._create_content_and_match_with_info, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform
+                )
+            else:
+                result = session.write_transaction(
+                        self._match_content_with_info, url, crawl_time, category, rank, platform
+                )
 
     def create_keyword(self, keyword):
         with self.driver.session() as session:
@@ -39,21 +46,19 @@ class App:
             if len(result) == 0:
                 result = session.write_transaction(self._create_keyword, keyword)
 
-    def match_content_and_keyword(self, keyword, url, title, date, n_view, n_comment, good, bad ):
+    def match_content_and_keyword(self, keyword, url, crawl_time):
         with self.driver.session() as session:
-            result = session.read_transaction(
-                self._find_content_and_keyword, keyword, url, title, date, n_view, n_comment, good, bad
-            )
+            result = session.read_transaction(self._find_content_and_keyword, keyword, url, crawl_time)
             if len(result) == 0:
-                session.write_transaction(
-                    self._match_content_and_keyword, keyword, url, title, date, n_view, n_comment, good, bad
+                result = session.write_transaction(
+                    self._match_content_and_keyword, keyword, url, crawl_time
                 )
 
     # 모든 항목 content의 property로 넣기
-    def create_content(self, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform):
+    def create_content_test(self, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform):
         with self.driver.session() as session:
             session.write_transaction(
-                self._create_content, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform
+                self._create_content_test, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform
             )
 
     # keyword connection
@@ -158,13 +163,14 @@ class App:
         result = tx.run(query, keyword=keyword)
 
     @staticmethod
-    def _find_content_and_keyword(tx, keyword, url, title, date, n_view, n_comment, good, bad):
+    def _find_content_and_keyword(tx, keyword, url, crawl_time ):
         query = (
-            "MATCH (c: Content { url: $url, title: $title, date: $date, n_view: $n_view, n_comment: $n_comment, good: $good, bad: $bad})-[:EXTRACTS]->(k: Keyword { name: $keyword}) "
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time}) "
+            "WITH c "
+            "MATCH (c)-[:EXTRACTS]->(k: Keyword { name: $keyword }) "
             "RETURN k.name AS name"
             )
-        result = tx.run(query, keyword=keyword, url=url, title=title, date=date, n_view=n_view, n_comment=n_comment,\
-            good=good, bad=bad)
+        result = tx.run(query, keyword=keyword, url=url, crawl_time=crawl_time)
         res = [row["name"] for row in result]
         if res == None:
             return None
@@ -172,14 +178,27 @@ class App:
             return res
 
     @staticmethod
-    def _match_content_and_keyword(tx, keyword, url, title, date, n_view, n_comment, good, bad ):
+    def _match_content_and_keyword(tx, keyword, url, crawl_time):
         query = (
-            "MATCH (c: Content { url: $url, title: $title, date: $date, n_view: $n_view, n_comment: $n_comment, good: $good, bad: $bad}) "
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time}) "
+            "WITH c "
             "MATCH (k: Keyword { name: $keyword}) "
             "CREATE (c)-[:EXTRACTS]->(k)"
             )
-        result = tx.run(query, keyword=keyword, url=url, title=title, date=date, n_view=n_view, n_comment=n_comment,\
-            good=good, bad=bad)
+        result = tx.run(query, keyword=keyword, url=url, crawl_time=crawl_time)
+
+    @staticmethod
+    def _find_and_return_content(tx, url, crawl_time):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(cr: CrawlTime { time: $crawl_time }) "
+            "RETURN c.title AS title"
+        )
+        result = tx.run(query, url=url, crawl_time=crawl_time)
+        res = [row["title"] for row in result]
+        if res == None:
+            return None
+        else:
+            return res
 
     @staticmethod
     def _create_content_and_match_with_info(tx, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform):
@@ -200,22 +219,18 @@ class App:
                 category=category, rank=rank, creator=creator, creator_url=creator_url, platform=platform)
 
     @staticmethod
-    def _match_content_with_info(tx, url, n_view, crawl_time, category, rank, creator, platform):
+    def _match_content_with_info(tx, url, crawl_time, category, rank, platform):
         query = (
-            "MATCH (c:Content { url: $url, n_view: $n_view }) "
-            "MATCH (ct:CrawlTime) WHERE ct.time = $crawl_time "
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time }) "
             "MATCH (t:Type { name: $category, platform: $platform }) "
             "MATCH (r:Rank { n: $rank, platform: $platform }) "
-            "MATCH (cr:Creator { name: $creator ,type: 'channel' }) "
-            "CREATE (c)-[:CRAWLED_AT]->(ct) "
             "CREATE (c)<-[:INCLUDES]-(t) "
             "CREATE (c)<-[:RANKS]-(r) "
-            "CREATE (c)<-[:MAKES]-(cr) "
         )
-        result = tx.run(query, url=url, n_view=n_view, crawl_time=crawl_time, category=category, rank=rank, creator=creator, platform=platform)
+        result = tx.run(query, url=url, crawl_time=crawl_time, category=category, rank=rank, platform=platform)
 
     @staticmethod
-    def _create_content(tx, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform):
+    def _create_content_test(tx, url, title, date, n_view, n_comment, good, bad, hashtags, description, crawl_time, category, rank, creator, creator_url, platform):
         query = (
             "CREATE (c:Content { url: $url, title: $title, date: $date, n_view: $n_view, n_comment: $n_comment, good: $good, bad: $bad, hashtags: $hashtags, description: $description, crawl_time: $crawl_time, category: $category, rank: $rank, creator: $creator, creator_url: $creator_url, platform: $platform }) "
         )

@@ -30,15 +30,35 @@ class App:
 
     def create_content_and_match_with_info(self, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform):
         with self.driver.session() as session:
-            contents = session.write_transaction(
-                self._create_content_and_match_with_info, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform
-            )
+            # 해당 crawl_time에 content가 존재하는지 확인
+            result = session.read_transaction(self._find_and_return_content, url, crawl_time)
+            if len(result) == 0:
+                result = session.write_transaction(
+                    self._create_content_and_match_with_info, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform
+                )
+            else:
+                # 해당 category에 content가 존재하는지 확인
+                result = session.read_transaction(self._find_and_return_category, url, crawl_time, category, platform)
+                if len(result) == 0:
+                    result = session.write_transaction(
+                        self._match_content_with_info, url, crawl_time, category, rank, platform
+                    )
 
-    def create_content_and_match_with_info_classified_by_age(self, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
+    def create_content_and_match_with_info_age(self, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
         with self.driver.session() as session:
-            contents = session.write_transaction(
-                self._create_content_and_match_with_info_classified_by_age, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform
-            )
+            # 해당 crawl_time에 content가 존재하는지 확인
+            result = session.read_transaction(self._find_and_return_content, url, crawl_time)
+            if len(result) == 0:
+                result = session.write_transaction(
+                    self._create_content_and_match_with_info_age, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform
+                )
+            else:
+                # 해당 category에 content가 존재하는지 확인
+                result = session.read_transaction(self._find_and_return_category_age, url, crawl_time, category, age, sex, platform)
+                if len(result) == 0:
+                    result = session.write_transaction(
+                        self._match_content_with_info_age, url, crawl_time, category, age, sex, rank, platform
+                    )
 
     def create_keyword(self, keyword):
         with self.driver.session() as session:
@@ -46,24 +66,26 @@ class App:
             if len(result) == 0:
                 result = session.write_transaction(self._create_keyword, keyword)
 
-    def match_content_and_keyword(self, keyword, url, title, date, n_comment, recommend, like, impress, angry, sad ):
+    def match_content_and_keyword(self, keyword, url, crawl_time):
         with self.driver.session() as session:
-            contents = session.write_transaction(
-                self._match_content_and_keyword, keyword, url, title, date, n_comment, recommend, like, impress, angry, sad
+            result = session.read_transaction(self._find_content_and_keyword, keyword, url, crawl_time)
+            if len(result) == 0:
+                result = session.write_transaction(
+                    self._match_content_and_keyword, keyword, url, crawl_time
+                )
+
+    # 모든 항목 content의 property로 넣기
+    def create_content_test(self, url, title, date, n_comment, recommend, like, impress, angry, sad):
+        with self.driver.session() as session:
+            session.write_transaction(
+                self._create_content_test, url, title, date, n_comment, recommend, like, impress, angry, sad
             )
 
     # 모든 항목 content의 property로 넣기
-    def create_content(self, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform):
+    def create_content_age_test(self, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
         with self.driver.session() as session:
             session.write_transaction(
-                self._create_content, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform
-            )
-
-    # 모든 항목 content의 property로 넣기
-    def create_content_age(self, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
-        with self.driver.session() as session:
-            session.write_transaction(
-                self._create_content_age, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform
+                self._create_content_age_test, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform
             )
 
     # keyword connection
@@ -169,15 +191,72 @@ class App:
         result = tx.run(query, keyword=keyword)
 
     @staticmethod
-    def _match_content_and_keyword(tx, keyword, url, title, date, n_comment, recommend, like, impress, angry, sad ):
+    def _find_content_and_keyword(tx, keyword, url, crawl_time ):
         query = (
-            "MATCH (c: Content { url: $url, title: $title, date: $date, n_comment: $n_comment, recommend: $recommend, like: $like, impress: $impress, angry: $angry, sad: $sad }) "
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time}) "
+            "WITH c "
+            "MATCH (c)-[:EXTRACTS]->(k: Keyword { name: $keyword }) "
+            "RETURN k.name AS name"
+            )
+        result = tx.run(query, keyword=keyword, url=url, crawl_time=crawl_time)
+        res = [row["name"] for row in result]
+        if res == None:
+            return None
+        else:
+            return res
+
+    @staticmethod
+    def _match_content_and_keyword(tx, keyword, url, crawl_time):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time}) "
+            "WITH c "
             "MATCH (k: Keyword { name: $keyword}) "
             "CREATE (c)-[:EXTRACTS]->(k)"
             )
-        result = tx.run(query, keyword=keyword, url=url, title=title, date=date, n_comment=n_comment,\
-            recommend=recommend, like=like, impress=impress, angry=angry, sad=sad)
+        result = tx.run(query, keyword=keyword, url=url, crawl_time=crawl_time)
 
+    @staticmethod
+    def _find_and_return_content(tx, url, crawl_time):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(cr: CrawlTime { time: $crawl_time }) "
+            "RETURN c.title AS title"
+        )
+        result = tx.run(query, url=url, crawl_time=crawl_time)
+        res = [row["title"] for row in result]
+        if res == None:
+            return None
+        else:
+            return res
+
+    @staticmethod
+    def _find_and_return_category(tx, url, crawl_time, category, platform):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(cr: CrawlTime { time: $crawl_time }) "
+            "WITH c "
+            "MATCH (c)<-[:INCLUDES]-(t:Type { name: $category, platform: $platform  }) "
+            "RETURN t.name AS name"
+        )
+        result = tx.run(query, url=url, crawl_time=crawl_time, category=category, platform=platform)
+        res = [row["name"] for row in result]
+        if res == None:
+            return None
+        else:
+            return res
+
+    @staticmethod
+    def _find_and_return_category_age(tx, url, crawl_time, category, age, sex, platform):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(cr: CrawlTime { time: $crawl_time }) "
+            "WITH c "
+            "MATCH (c)<-[:INCLUDES]-(t:Type { name: $category, age: $age, sex: $sex, platform: $platform  }) "
+            "RETURN t.name AS name"
+        )
+        result = tx.run(query, url=url, crawl_time=crawl_time, category=category, age=age, sex=sex, platform=platform)
+        res = [row["name"] for row in result]
+        if res == None:
+            return None
+        else:
+            return res
 
     @staticmethod
     def _create_content_and_match_with_info(tx, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform):
@@ -185,7 +264,7 @@ class App:
             "CREATE (c:Content { url: $url, title: $title, date: $date, n_comment: $n_comment, recommend: $recommend, like: $like, impress: $impress, angry: $angry, sad: $sad }) "
             "WITH c "
             "MATCH (ct:CrawlTime) WHERE ct.time = $crawl_time "
-            "MATCH (t:Type { name: $category }) "
+            "MATCH (t:Type { name: $category, platform: $platform  }) "
             "MATCH (r:Rank { n: $rank, platform: $platform }) "
             "MATCH (cr:Creator) WHERE cr.name = $creator AND cr.type = 'press' "
             "CREATE (c)-[:CRAWLED_AT]->(ct) "
@@ -195,19 +274,22 @@ class App:
         )
         result = tx.run(query, url=url, title=title, date=date, n_comment=n_comment,\
             recommend=recommend, like=like, impress=impress, angry=angry, sad=sad, \
-                crawl_time=crawl_time, category=category, rank=rank, creator=creator, platform=platform)
-        # try:
-        #     # 일부만 작성
-        #     return [{"c": row["c"]["title"], "com": row["com"]["n"], \
-        #         "react": row["react"], "ct": row["ct"]["time"]} for row in result]
-        # # Capture any errors along with the query and data for traceability
-        # except ServiceUnavailable as exception:
-        #     logging.error("{query} raised an error: \n {exception}".format(
-        #         query=query, exception=exception))
-        #     raise
+            crawl_time=crawl_time, category=category, rank=rank, creator=creator, platform=platform)
 
     @staticmethod
-    def _create_content_and_match_with_info_classified_by_age(tx, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
+    def _match_content_with_info(tx, url, crawl_time, category, rank, platform):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time }) "
+            "MATCH (t:Type { name: $category, platform: $platform }) "
+            "MATCH (r:Rank { n: $rank, platform: $platform }) "
+            "CREATE (c)<-[:INCLUDES]-(t) "
+            "CREATE (c)<-[:RANKS]-(r) "
+        )
+        result = tx.run(query, url=url, crawl_time=crawl_time, \
+            category=category, rank=rank, platform=platform)
+
+    @staticmethod
+    def _create_content_and_match_with_info_age(tx, url, title, date, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
         query = (
             "CREATE (c:Content { url: $url, title: $title, date: $date, n_comment: $n_comment, recommend: $recommend, like: $like, impress: $impress, angry: $angry, sad: $sad }) "
             "WITH c "
@@ -235,7 +317,19 @@ class App:
             raise
 
     @staticmethod
-    def _create_content(tx, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform):
+    def _match_content_with_info_age(tx, url, crawl_time, category, age, sex, rank, platform):
+        query = (
+            "MATCH (c: Content { url: $url })-[:CRAWLED_AT]->(ct: CrawlTime { time: $crawl_time }) "
+            "MATCH (t:Type { name: $category, platform: $platform, age: $age, sex: $sex }) "
+            "MATCH (r:Rank { n: $rank, platform: $platform }) "
+            "CREATE (c)<-[:INCLUDES]-(t) "
+            "CREATE (c)<-[:RANKS]-(r) "
+        )
+        result = tx.run(query, url=url, crawl_time=crawl_time, category=category,\
+            age=age, sex=sex, rank=rank, platform=platform)
+
+    @staticmethod
+    def _create_content_test(tx, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, rank, creator, platform):
         query = (
             "CREATE (c:Content { url: $url, title: $title, date: $date, n_view: $n_view, n_comment: $n_comment, recommend: $recommend, like: $like, impress: $impress, angry: $angry, sad: $sad, crawl_time: $crawl_time, category: $category, rank: $rank, creator: $creator, platform: $platform }) "
         )
@@ -244,13 +338,13 @@ class App:
                 crawl_time=crawl_time, category=category, rank=rank, creator=creator, platform=platform)
 
     @staticmethod
-    def _create_content_age(tx, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
+    def _create_content_age_test(tx, url, title, date, n_view, n_comment, recommend, like, impress, angry, sad, crawl_time, category, age, sex, rank, creator, platform):
         query = (
             "CREATE (c:Content { url: $url, title: $title, date: $date, n_view: $n_view, n_comment: $n_comment, recommend: $recommend, like: $like, impress: $impress, angry: $angry, sad: $sad, crawl_time: $crawl_time, category: $category, age: $age, sex: $sex, rank: $rank, creator: $creator, platform: $platform }) "
         )
         result = tx.run(query, url=url, title=title, date=date, n_view=n_view, n_comment=n_comment,\
             recommend=recommend, like=like, impress=impress, angry=angry, sad=sad, \
-                crawl_time=crawl_time, category=category, age=age, sex=sex rank=rank, creator=creator, platform=platform)
+                crawl_time=crawl_time, category=category, age=age, sex=sex, rank=rank, creator=creator, platform=platform)
 
 if __name__ == "__main__":
     # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
@@ -284,8 +378,6 @@ if __name__ == "__main__":
 
         for elem in value['keyword']:
             app.create_keyword(elem)
-            app.match_content_and_keyword(elem, value['url'], value['title'], value['date'], value['n_comment'], \
-                value['n_reaction_recommend'], value['n_reaction_like'], value['n_reaction_impress'], \
-                value['n_reaction_angry'], value['n_reaction_sad'])
+            app.match_content_and_keyword(elem, value['url'], value['crawl_time'])
 
     app.close()

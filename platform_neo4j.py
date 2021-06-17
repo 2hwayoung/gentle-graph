@@ -3,6 +3,9 @@ import logging
 from neo4j.exceptions import ServiceUnavailable
 from tqdm import tqdm
 
+from config import CONFIG
+from config import TEST_CONFIG
+
 class App:
 
     def __init__(self, uri, user, password):
@@ -47,7 +50,7 @@ class App:
     def _create_type_and_match_platform(tx, platform, type):
         query = (
             "MATCH (p:Platform { name: $platform})"
-            "CREATE (t:Type { name: $type, platform: $platform }) "
+            "CREATE (t:Type { name: $type }) "
             "CREATE (p)-[:CLASSIFIES]->(t)"
         )
         tx.run(query, platform=platform, type=type)
@@ -62,7 +65,7 @@ class App:
     @staticmethod
     def _match_type_and_rank(tx, platform, type, rank):
         query = (
-            "MATCH (t:Type { name: $type, platform: $platform }) "
+            "MATCH (t:Type { name: $type }) "
             "MATCH (r:Rank { n: $rank, platform: $platform }) "
             "CREATE (r)-[:RANKED_FROM]->(t)"
         )
@@ -71,7 +74,7 @@ class App:
     @staticmethod
     def _match_age_type_and_rank(tx, platform, type, age, sex, rank):
         query = (
-            "MATCH (t:Type { name: $type, platform: $platform, age: $age, sex: $sex}) "
+            "MATCH (t:Type { name: $type, age: $age, sex: $sex}) "
             "MATCH (r:Rank { n: $rank, platform: $platform}) "
             "CREATE (r)-[:RANKED_FROM]->(t)"
         )
@@ -81,7 +84,7 @@ class App:
     def _create_age_type_and_match_platform(tx, platform, type, age, sex):
         query = (
             "MATCH (p:Platform { name: $platform})"
-            "CREATE (t:Type { name: $type, platform: $platform, age: $age, sex: $sex }) "
+            "CREATE (t:Type { name: $type, age: $age, sex: $sex }) "
             "CREATE (p)-[:CLASSIFIES]->(t)"
         )
         tx.run(query, platform=platform, type=type, age=age, sex=sex)
@@ -89,10 +92,16 @@ class App:
 
 if __name__ == "__main__":
     # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
-    bolt_url = "bolt://localhost:7687"
-    user = "neo4j"
-    password = "neo4j123"
-    app = App(bolt_url, user, password)
+
+    import sys
+    option = sys.argv[1]
+
+    if option == "test":
+        app = App(TEST_CONFIG["bolt_url"], TEST_CONFIG["user"], TEST_CONFIG["password"])
+    
+    elif option == "service":
+        app = App(CONFIG["bolt_url"], CONFIG["user"], CONFIG["password"])
+
 
     #create platform
     platforms = ['Naver', 'Daum', 'Youtube']

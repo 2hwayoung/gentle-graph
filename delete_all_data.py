@@ -3,6 +3,9 @@ import logging
 from neo4j.exceptions import ServiceUnavailable
 from tqdm import tqdm
 
+from config import CONFIG
+from config import TEST_CONFIG
+
 class App:
 
     def __init__(self, uri, user, password):
@@ -73,10 +76,15 @@ class App:
 
 if __name__ == "__main__":
     # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
-    bolt_url = "bolt://localhost:7687"
-    user = "neo4j"
-    password = "neo4j123"
-    app = App(bolt_url, user, password)
+
+    import sys
+    option = sys.argv[1]
+
+    if option == "test":
+        app = App(TEST_CONFIG["bolt_url"], TEST_CONFIG["user"], TEST_CONFIG["password"])
+    
+    elif option == "service":
+        app = App(CONFIG["bolt_url"], CONFIG["user"], CONFIG["password"])
 
     for i in tqdm(range(1)):
         app.delete_all_data()

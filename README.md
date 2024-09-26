@@ -25,7 +25,6 @@
 - Neo4j
 - AWS EC2
 - Postgres
-- Gitbucket(migrated from GitBucket to GitHub)
 
 ## 4. Structure
 <img src="https://github.com/user-attachments/assets/c578abcd-f684-44da-bb55-15b6519ecbae" height="400"/>

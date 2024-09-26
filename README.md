@@ -8,7 +8,7 @@
 
 - **기간**: 2021.03 - 2021.06
 - **주요 플랫폼**: 네이버 뉴스, 다음 뉴스, 유튜브 동영상
-- **특징**: Pororo(NLP)을 이용한 실시간 키워드 추출, 그래프DB(Neo4j)를 통한 데이터 관계 분석 및 시각화
+- **특징**: Pororo(NER)을 이용한 실시간 키워드 추출, 그래프DB(Neo4j)를 통한 데이터 관계 분석 및 시각화
 - **Report**: [사용자 행동 기반의 실시간 이슈트렌드 분석; 그래프DB를 활용하여](https://2hwayoung.notion.site/DB-e85b2cdd78624fa2a7ced1e62b4f51ba?pvs=4)
 
   
@@ -21,19 +21,18 @@
 ## 3. Skills
 - Python Crawling
 - Kafka
-- Airflow
+- Airflow (with PostgresDB)
 - Neo4j
-- AWS EC2
-- Postgres
+- AWS EC2 4대
 
 ## 4. Structure
 <img src="https://github.com/user-attachments/assets/c578abcd-f684-44da-bb55-15b6519ecbae" height="400"/>
 
 
 ## 5. Flow
-1) **데이터 수집**: 네이버뉴스, 다음뉴스, 유튜브 동영상 데이터 수집
+1) **데이터 수집**: 네이버뉴스, 다음뉴스, 유튜브 동영상 데이터 수집 (댓글수, 평가(반응)수, 조회수, 좋아요/싫어요수 등)
 3) **데이터 처리**: Kafka 실시간 데이터 처리(5분 간격)
-4) **실시간 인기 검색어 추출**: KakaoBrain의 Pororo(NLP)을 이용하여 실시간 이슈 검색어 추출
+4) **실시간 인기 검색어 추출**: KakaoBrain의 Pororo(NER)을 이용하여 실시간 이슈 검색어 추출
 5) **그래프 DB**: Neo4j 그래프 데이터베이스 구축
 
 
@@ -41,7 +40,7 @@
 
 6) **키워드 분석 모델**: 키워드 분석 Decision tree 모델 설계 및 학습
 7) **워크플로우 관리**: Airflow Scheduler 구축
-8) **그래프 시각화 및 웹서비스**: 그래프 시각화와 Flask로 웹서비스 구현
+8) **그래프 시각화 및 웹서비스**: Neo4j Bloom 그래프 시각화와 Flask로 웹서비스 구현
 
   <img src="https://github.com/user-attachments/assets/303941bf-2ce0-4612-886f-405690315a4b" height="300"/>
 

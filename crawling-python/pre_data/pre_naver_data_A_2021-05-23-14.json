@@ -1,0 +1,136 @@
+[
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 1,
+        "date": "2021.05.23. 오전 11:26",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696329&rankingType=RANKING",
+        "title": "한·미·일 매출 100대 기업 ESG 성적보니… 일본 '1등'·한국 '꼴찌'",
+        "press": "머니S",
+        "n_reaction_good": 1,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 3,
+        "n_reaction_angry": 11,
+        "n_reaction_want": 2,
+        "n_view": 2413,
+        "n_comment": 16,
+        "n_reactions": 17,
+        "keyword": []
+    },
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 2,
+        "date": "2021.05.23. 오전 5:38",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696282&rankingType=RANKING",
+        "title": "'멀기만 한 10만전자' 삼성전자 목표가 잇단 하향, 반등할까",
+        "press": "머니S",
+        "n_reaction_good": 7,
+        "n_reaction_warm": 2,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 42,
+        "n_reaction_want": 3,
+        "n_view": 1881,
+        "n_comment": 68,
+        "n_reactions": 55,
+        "keyword": [
+            "삼성전자"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 3,
+        "date": "2021.05.23. 오전 9:30",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696306&rankingType=RANKING",
+        "title": "‘출발은 우려, 성과는 큼지막’… 문 대통령 방미, ‘백신·반도체’ 협력 등 결실",
+        "press": "머니S",
+        "n_reaction_good": 117,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 247,
+        "n_reaction_want": 3,
+        "n_view": 1260,
+        "n_comment": -1,
+        "n_reactions": 368,
+        "keyword": [
+            "대통령"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 4,
+        "date": "2021.05.23. 오전 11:02",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696323&rankingType=RANKING",
+        "title": "“가상화폐 거품 꼈다”… 이더리움 창시자의 진단",
+        "press": "머니S",
+        "n_reaction_good": 5,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 2,
+        "n_reaction_want": 0,
+        "n_view": 1174,
+        "n_comment": 8,
+        "n_reactions": 9,
+        "keyword": [
+            "창시자"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 5,
+        "date": "2021.05.23. 오전 11:40",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696332&rankingType=RANKING",
+        "title": "“정부기관 보유 금 현금화하자”… 억대 사기 60대, 징역 1년 6개월 선고에 항소",
+        "press": "머니S",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 4,
+        "n_reaction_want": 1,
+        "n_view": 893,
+        "n_comment": 2,
+        "n_reactions": 5,
+        "keyword": [
+            "징역",
+            "정부"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 6,
+        "date": "2021.05.23. 오전 10:10",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696315&rankingType=RANKING",
+        "title": "유행처럼 번지는 ‘민식이법 놀이’… “애들이 스쿨존에 차오면 뛰어든다”",
+        "press": "머니S",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 2,
+        "n_reaction_angry": 80,
+        "n_reaction_want": 0,
+        "n_view": 866,
+        "n_comment": 42,
+        "n_reactions": 82,
+        "keyword": [
+            "민식"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/14",
+        "rank": 7,
+        "date": "2021.05.23. 오전 10:20",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000696317&rankingType=RANKING",
+        "title": "손정민씨 아버지 \"카이스트 다니게 할 걸, 밤에 내보내지 말 걸 무한 후회\"",
+        "press": "머니S",
+        "n_reaction_good": 5,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 749,
+        "n_reaction_angry": 49,
+        "n_reaction_want": 267,
+        "n_view": 863,
+        "n_comment": 186,
+        "n_reactions": 1071,
+        "keyword": [
+            "카이스트",
+            "아버지",
+            "손정민"
+        ]
+    }
+]

@@ -1,0 +1,43 @@
+[
+    {
+        "crawl_time": "2021-05-23/19",
+        "rank": 1,
+        "date": "2021.05.23. 오후 1:49",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209158&rankingType=RANKING",
+        "title": "서울시 “김어준 과태료, 마포구 결정 취소 안 한다”",
+        "press": "채널A",
+        "n_reaction_good": 10,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 1781,
+        "n_reaction_want": 10,
+        "n_view": 5901,
+        "n_comment": 403,
+        "n_reactions": 1802,
+        "keyword": [
+            "김어준",
+            "서울시",
+            "마포구"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/19",
+        "rank": 2,
+        "date": "2021.05.23. 오후 2:59",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209167&rankingType=RANKING",
+        "title": "이준석, 당권 지지도 30.1%로 압도적 1위…나경원 17.4%로 2위",
+        "press": "채널A",
+        "n_reaction_good": 404,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 177,
+        "n_reaction_want": 6,
+        "n_view": 5857,
+        "n_comment": -1,
+        "n_reactions": 587,
+        "keyword": [
+            "나경원",
+            "이준석"
+        ]
+    }
+]

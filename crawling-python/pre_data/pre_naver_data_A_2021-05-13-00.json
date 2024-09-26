@@ -1,0 +1,82 @@
+[
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 1,
+        "date": "2021.05.12. 오후 7:18",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000692838&rankingType=RANKING",
+        "title": "정인이 양모, 옥중편지에 'ㅋㅋㅋ·♡'… 공개한 유튜버는 피소",
+        "press": "머니S",
+        "n_reaction_good": 1,
+        "n_reaction_warm": 3,
+        "n_reaction_sad": 3,
+        "n_reaction_angry": 383,
+        "n_reaction_want": 19,
+        "n_view": 3569,
+        "n_comment": 131,
+        "n_reactions": 409,
+        "keyword": [
+            "정인",
+            "양모"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 2,
+        "date": "2021.05.12. 오후 6:19",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000692820&rankingType=RANKING",
+        "title": "故 손정민씨 아버지, 경찰에 탄원… \"의혹·인물 전부 면밀히 조사해달라\"",
+        "press": "머니S",
+        "n_reaction_good": 6,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 7,
+        "n_reaction_angry": 194,
+        "n_reaction_want": 491,
+        "n_view": 2137,
+        "n_comment": 76,
+        "n_reactions": 699,
+        "keyword": [
+            "경찰",
+            "아버지",
+            "손정민"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 3,
+        "date": "2021.05.12. 오후 5:30",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000692803&rankingType=RANKING",
+        "title": "대만發 반도체 쇼크에… 삼성전자·SK하이닉스 '와르르'",
+        "press": "머니S",
+        "n_reaction_good": 4,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 3,
+        "n_reaction_angry": 53,
+        "n_reaction_want": 2,
+        "n_view": 1935,
+        "n_comment": 32,
+        "n_reactions": 63,
+        "keyword": [
+            "삼성전자",
+            "SK하이닉스"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 4,
+        "date": "2021.05.12. 오전 7:05",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=417&aid=0000692346&rankingType=RANKING",
+        "title": "SKIET, 상장 첫날 호된 신고식… 영끌 개미는 '패닉'",
+        "press": "머니S",
+        "n_reaction_good": 67,
+        "n_reaction_warm": 8,
+        "n_reaction_sad": 3,
+        "n_reaction_angry": 40,
+        "n_reaction_want": 4,
+        "n_view": 1347,
+        "n_comment": 145,
+        "n_reactions": 122,
+        "keyword": [
+            "SKIET"
+        ]
+    }
+]

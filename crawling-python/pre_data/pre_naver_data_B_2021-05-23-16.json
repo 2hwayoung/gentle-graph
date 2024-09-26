@@ -1,0 +1,61 @@
+[
+    {
+        "crawl_time": "2021-05-23/16",
+        "rank": 1,
+        "date": "2021.05.23. 오후 1:49",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209158&rankingType=RANKING",
+        "title": "서울시 “김어준 과태료 부과 안 한다”…4개월 만에 최종결론",
+        "press": "채널A",
+        "n_reaction_good": 4,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 920,
+        "n_reaction_want": 6,
+        "n_view": 8206,
+        "n_comment": 233,
+        "n_reactions": 931,
+        "keyword": [
+            "김어준",
+            "서울시"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/16",
+        "rank": 2,
+        "date": "2021.05.23. 오후 1:51",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209159&rankingType=RANKING",
+        "title": "故노무현 전 대통령 12주기 추도식…봉하마을 묘역서 엄수",
+        "press": "채널A",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 2,
+        "n_reaction_angry": 212,
+        "n_reaction_want": 1,
+        "n_view": 2323,
+        "n_comment": -1,
+        "n_reactions": 215,
+        "keyword": [
+            "노무현",
+            "대통령"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/16",
+        "rank": 3,
+        "date": "2021.05.23. 오전 11:12",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209156&rankingType=RANKING",
+        "title": "문 대통령 \"최고의 순방, 최고의 회담…더할 나위 없이 좋았다\"",
+        "press": "채널A",
+        "n_reaction_good": 31,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 3,
+        "n_reaction_angry": 1035,
+        "n_reaction_want": 6,
+        "n_view": 2136,
+        "n_comment": -1,
+        "n_reactions": 1075,
+        "keyword": [
+            "대통령"
+        ]
+    }
+]

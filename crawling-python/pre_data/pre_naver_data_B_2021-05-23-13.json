@@ -1,0 +1,59 @@
+[
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 1,
+        "date": "2021.05.23. 오전 9:01",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209154&rankingType=RANKING",
+        "title": "삼성바이오, 모더나 백신 '위탁생산'…한·미 백신 파트너십 구축",
+        "press": "채널A",
+        "n_reaction_good": 57,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 1,
+        "n_reaction_angry": 127,
+        "n_reaction_want": 3,
+        "n_view": 3271,
+        "n_comment": 89,
+        "n_reactions": 188,
+        "keyword": [
+            "삼성바이오"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 2,
+        "date": "2021.05.22. 오후 7:25",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209142&rankingType=RANKING",
+        "title": "‘대구 원정 유흥’에 주점발 확진자 108명으로 늘어",
+        "press": "채널A",
+        "n_reaction_good": 7,
+        "n_reaction_warm": 3,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 143,
+        "n_reaction_want": 2,
+        "n_view": 2824,
+        "n_comment": 59,
+        "n_reactions": 155,
+        "keyword": [
+            "확진자"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/13",
+        "rank": 3,
+        "date": "2021.05.23. 오전 11:12",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209156&rankingType=RANKING",
+        "title": "문 대통령 \"최고의 순방, 최고의 회담…더할 나위 없이 좋았다\"",
+        "press": "채널A",
+        "n_reaction_good": 11,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 2,
+        "n_reaction_angry": 368,
+        "n_reaction_want": 0,
+        "n_view": 2208,
+        "n_comment": -1,
+        "n_reactions": 381,
+        "keyword": [
+            "대통령"
+        ]
+    }
+]

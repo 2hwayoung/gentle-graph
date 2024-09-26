@@ -1,0 +1,39 @@
+[
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 1,
+        "date": "2021.05.12. 오후 7:38",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000208666&rankingType=RANKING",
+        "title": "조금씩 확인되는 손 씨 친구 행적…‘새벽 2시 사진’ 확보",
+        "press": "채널A",
+        "n_reaction_good": 4,
+        "n_reaction_warm": 3,
+        "n_reaction_sad": 6,
+        "n_reaction_angry": 678,
+        "n_reaction_want": 594,
+        "n_view": 8320,
+        "n_comment": 186,
+        "n_reactions": 1285,
+        "keyword": []
+    },
+    {
+        "crawl_time": "2021-05-13/00",
+        "rank": 2,
+        "date": "2021.05.12. 오후 7:44",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000208668&rankingType=RANKING",
+        "title": "[단독]입양한 막내 빼고 외출…이웃들 “늘 아기 빼고 다녀”",
+        "press": "채널A",
+        "n_reaction_good": 0,
+        "n_reaction_warm": 2,
+        "n_reaction_sad": 13,
+        "n_reaction_angry": 563,
+        "n_reaction_want": 6,
+        "n_view": 6541,
+        "n_comment": 156,
+        "n_reactions": 584,
+        "keyword": [
+            "이웃",
+            "막내"
+        ]
+    }
+]

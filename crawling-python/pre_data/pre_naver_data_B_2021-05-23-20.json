@@ -1,0 +1,82 @@
+[
+    {
+        "crawl_time": "2021-05-23/20",
+        "rank": 1,
+        "date": "2021.05.23. 오후 1:49",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209158&rankingType=RANKING",
+        "title": "서울시 “김어준 과태료, 마포구 결정 취소 안 한다”",
+        "press": "채널A",
+        "n_reaction_good": 14,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 2025,
+        "n_reaction_want": 11,
+        "n_view": 4612,
+        "n_comment": 471,
+        "n_reactions": 2051,
+        "keyword": [
+            "김어준",
+            "서울시",
+            "마포구"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/20",
+        "rank": 2,
+        "date": "2021.05.23. 오후 2:59",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209167&rankingType=RANKING",
+        "title": "이준석, 당권 지지도 30.1%로 압도적 1위…나경원 17.4%로 2위",
+        "press": "채널A",
+        "n_reaction_good": 466,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 199,
+        "n_reaction_want": 7,
+        "n_view": 4338,
+        "n_comment": -1,
+        "n_reactions": 673,
+        "keyword": [
+            "나경원",
+            "이준석"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/20",
+        "rank": 3,
+        "date": "2021.05.23. 오후 1:51",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209159&rankingType=RANKING",
+        "title": "故노무현 전 대통령 12주기 추도식…봉하마을 묘역서 엄수",
+        "press": "채널A",
+        "n_reaction_good": 2,
+        "n_reaction_warm": 1,
+        "n_reaction_sad": 6,
+        "n_reaction_angry": 412,
+        "n_reaction_want": 1,
+        "n_view": 958,
+        "n_comment": -1,
+        "n_reactions": 422,
+        "keyword": [
+            "노무현",
+            "대통령"
+        ]
+    },
+    {
+        "crawl_time": "2021-05-23/20",
+        "rank": 4,
+        "date": "2021.05.23. 오후 4:16",
+        "url": "https://news.naver.com/main/ranking/read.nhn?mode=LSD&mid=shm&sid1=001&oid=449&aid=0000209168&rankingType=RANKING",
+        "title": "문 대통령 “배터리 공장, 한미 성공적 협력모델”…방미 일정 마무리",
+        "press": "채널A",
+        "n_reaction_good": 4,
+        "n_reaction_warm": 0,
+        "n_reaction_sad": 0,
+        "n_reaction_angry": 137,
+        "n_reaction_want": 2,
+        "n_view": 925,
+        "n_comment": -1,
+        "n_reactions": 143,
+        "keyword": [
+            "대통령"
+        ]
+    }
+]
